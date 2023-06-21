@@ -5,7 +5,7 @@
 <mapper namespace="com.tfriends.dao.CmsDAO">
     <!-- Search Query -->
     <sql id="search">
-        <if test='dto.search_type == "all".toString()'>
+        <if test='dsearch_type == "all".toString()'>
             AND
             (
             <include refid="t" /> OR
@@ -13,26 +13,26 @@
             <include refid="w" />
             )
         </if>
-        <if test='dto.search_type == "tnc".toString()'>
+        <if test='dsearch_type == "tnc".toString()'>
             AND
             (
             <include refid="t" /> OR
             <include refid="c" />
             )
         </if>
-        <if test='dto.search_type == "title".toString()'>
+        <if test='dsearch_type == "title".toString()'>
             AND
             (
             <include refid="t" />
             )
         </if>
-        <if test='dto.search_type == "writer".toString()'>
+        <if test='dsearch_type == "writer".toString()'>
             AND
             (
             <include refid="w" />
             )
         </if>
-        <if test='dto.search_type == "content".toString()'>
+        <if test='search_type == "content".toString()'>
             AND
             (
             <include refid="c" />
@@ -40,13 +40,13 @@
         </if>
     </sql>
     <sql id="t">
-        `title`like CONCAT('%', #{dto.word}, '%')
+        `title`like CONCAT('%', #{word}, '%')
     </sql>
     <sql id="c">
-        `content`like CONCAT('%', #{dto.word}, '%')
+        `content`like CONCAT('%', #{word}, '%')
     </sql>
     <sql id="w">
-        b.`name`like CONCAT('%', #{dto.word}, '%')
+        b.`name`like CONCAT('%', #{word}, '%')
     </sql>
 
     <!-- SQL Query -->
@@ -65,7 +65,7 @@
         ]]>
         <include refid="boardListSQL"></include>
         <![CDATA[
-            ORDER BY `no` DESC limit #{dto.firstArticle},#{dto.limit}
+            ORDER BY `no` DESC limit #{firstArticle},#{limit}
         ]]>
     </select>
     <select id="boardCount" resultType="int">
