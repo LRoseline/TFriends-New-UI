@@ -10,4 +10,8 @@ import lombok.ToString;
 public class SecureDTO {
     private int no;
     private String type, url, name, hash;
+
+    public String getBoard() {
+        return this.getType() + "_" + this.getUrl();
+    }
 }

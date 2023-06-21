@@ -17,14 +17,19 @@ public class V2Controller {
     @Autowired
     private CmsServiceV2 service;
 
+    public SecureDTO hashCheck(String hash) {
+        SecureDTO secure = service.hashCheck(hash);
+
+        return secure;
+    }
+
     @GetMapping("/cmsv2/{hash}")
     public Object defaultBoard(PaginationDTOV2 page, Model mdl, @PathVariable("hash") String hash, SearchDTOV2 dto) {
         try {
-            SecureDTO secure = service.hashCheck(hash);
-            String board = secure.getType() + "_" + secure.getUrl();
+            SecureDTO secure = this.hashCheck(hash);
 
             page.setCount(dto);
-            page.setTotalpage(service.userBoardCount(board, dto));
+            page.setTotalpage(service.userBoardCount(secure.getBoard(), dto));
 
             if (page.getEnd() < dto.getPage()) {
                 dto.setPage(page.getEnd());
@@ -37,8 +42,8 @@ public class V2Controller {
             mdl.addAttribute("dto", dto);
             mdl.addAttribute("page", page);
 
-            // mdl.addAttribute("detail", secure);
-            mdl.addAttribute("board", service.userBoardList(board, dto));
+            mdl.addAttribute("detail", secure);
+            mdl.addAttribute("board", service.userBoardList(secure.getBoard(), dto));
 
             return "/cms/default/list";
         } catch (Exception e) {
