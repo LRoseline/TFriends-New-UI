@@ -1,4 +1,4 @@
-package com.tfriends.root;
+package com.tfriends.root.cms;
 
 import java.util.List;
 
@@ -26,7 +26,7 @@ import com.tfriends.service.CmsService;
 import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
-public class CmsController {
+public class V1Controller {
 
     @Autowired
     private CmsService service;
@@ -41,7 +41,8 @@ public class CmsController {
     }
 
     @GetMapping("/community/{category}")
-    public ModelAndView defaultBoard(Model mdl, PaginationDTO page, @PathVariable("category") String board,
+    public ModelAndView defaultBoard(Model mdl, PaginationDTO page,
+            @PathVariable("category") String board,
             SearchDTO dto) {
         dto.setBoard(board);
 
@@ -59,7 +60,8 @@ public class CmsController {
         mdl.addAttribute("dto", dto);
         mdl.addAttribute("page", page);
 
-        return new ModelAndView("/cms/default/list", "board", service.userBoardList(dto));
+        return new ModelAndView("/cms/default/list", "board",
+                service.userBoardList(dto));
     }
 
     // Common Area
@@ -71,31 +73,36 @@ public class CmsController {
     }
 
     @PostMapping("/community/{category}/edit/{arcno}")
-    public ModelAndView defaultBoardEdit(@PathVariable("category") String c, Model mdl, @PathVariable("arcno") int no,
+    public ModelAndView defaultBoardEdit(@PathVariable("category") String c,
+            Model mdl, @PathVariable("arcno") int no,
             @ModelAttribute("dto") SearchDTO dto) {
         mdl.addAttribute("edit", service.userBoardRead(c, no));
         return new ModelAndView("/cms/default/write", "isEdit", 1);
     }
 
     @PostMapping("/community/{category}/edit/{arcno}/go")
-    public String defaultBoardEdit(@PathVariable("category") String c, @PathVariable("arcno") int no, DefaultDTO cms,
+    public String defaultBoardEdit(@PathVariable("category") String c,
+            @PathVariable("arcno") int no, DefaultDTO cms,
             SearchDTO dto) {
         AccountDTO accounts = this.getAuthen();
         cms.setNo(no);
         cms.setWriter(accounts.getUno());
 
         service.editArticle(c, cms);
-        String rebor = "redirect:" + directCommunity(c, no) + dto.uriQuerys(dto.getPage());
+        String rebor = "redirect:" + directCommunity(c, no) +
+                dto.uriQuerys(dto.getPage());
         return rebor;
     }
 
     @GetMapping("/community/{category}/write")
-    public ModelAndView defaultBoardArticle(@PathVariable("category") String c, @ModelAttribute("dto") SearchDTO dto) {
+    public ModelAndView defaultBoardArticle(@PathVariable("category") String c,
+            @ModelAttribute("dto") SearchDTO dto) {
         return new ModelAndView("/cms/default/write", "isEdit", 0);
     }
 
     @PostMapping("/community/{category}/write")
-    public String defaultBoardArticleGo(@PathVariable("category") String c, DefaultDTO dto) {
+    public String defaultBoardArticleGo(@PathVariable("category") String c,
+            DefaultDTO dto) {
         AccountDTO accounts = this.getAuthen();
 
         PermissionDTO permissionWrite = service.getBoardPermission("community", c);
@@ -112,7 +119,8 @@ public class CmsController {
 
     // Standard Area
     @PostMapping("/community/{category}/delete/{rno}")
-    public String defaultBoardDelete(@PathVariable("category") String category, @PathVariable("rno") int rno,
+    public String defaultBoardDelete(@PathVariable("category") String category,
+            @PathVariable("rno") int rno,
             HttpServletRequest req) throws Exception {
         AccountDTO a = this.getAuthen();
 

@@ -16,11 +16,9 @@ public class ErrorLoad implements ErrorController {
 
     @PostMapping("/error")
     public ErrorDTO errorAPI(HttpServletRequest req) {
-        ErrorDTO dto = new ErrorDTO();
-
         int cod = Integer.valueOf(req.getAttribute(RequestDispatcher.ERROR_STATUS_CODE).toString());
+        ErrorDTO dto = new ErrorDTO(cod);
 
-        dto.setCod(cod);
         return dto;
     }
 }

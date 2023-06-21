@@ -2,21 +2,24 @@ package com.tfriends.dto.system;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
+@ToString
 public class ErrorDTO {
+    public ErrorDTO(int cod) {
+        this.cod = cod;
+        this.mes = getMes(cod);
+    }
+
     private int cod;
     private String mes;
 
-    public String setMes() {
-        return this.mes;
-    }
-
-    public String getMes() {
+    public String getMes(int code) {
         mes = "OK";
 
-        switch (cod) {
+        switch (code) {
             case 100:
                 mes = "Continue";
                 break;

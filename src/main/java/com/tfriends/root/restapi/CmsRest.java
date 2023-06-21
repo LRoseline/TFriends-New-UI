@@ -10,10 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tfriends.dto.cms.DefaultDTO;
-import com.tfriends.dto.pagination.CountPageDTO;
 import com.tfriends.dto.system.MenuDTO;
 import com.tfriends.dto.system.TrashDTO;
-import com.tfriends.service.CmsService;
+import com.tfriends.service.CmsServiceV2;
 import com.tfriends.service.HomeService;
 
 @RestController
@@ -31,20 +30,13 @@ public class CmsRest {
     private HomeService service;
 
     @Autowired
-    private CmsService cms;
+    private CmsServiceV2 cms;
 
     @GetMapping("/menu")
     public ResponseEntity<Object> menuLoading() {
         List<MenuDTO> dto = service.homeMenu();
 
         return new ResponseEntity<Object>(dto, HttpStatus.OK);
-    }
-
-    @GetMapping("/board")
-    public ResponseEntity<Object> meunAPI(CountPageDTO dto) {
-        List<DefaultDTO> list = cms.userBoardList(dto);
-
-        return new ResponseEntity<Object>(list, HttpStatus.OK);
     }
 
     @GetMapping("/recycle")

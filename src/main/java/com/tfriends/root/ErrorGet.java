@@ -21,6 +21,7 @@ public class ErrorGet implements ErrorController {
         }
 
         mdl.addAttribute("cod", status + " ERROR!!");
+        mdl.addAttribute("mes", req.getAttribute(RequestDispatcher.ERROR_EXCEPTION));
         return "/default/error";
     }
 }

@@ -6,13 +6,13 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import com.tfriends.dto.BBCodeFilter;
 import com.tfriends.dto.cms.DefaultDTO;
-import com.tfriends.service.CmsService;
+import com.tfriends.service.CmsServiceV2;
 
 @SpringBootTest
 public class BBCodeTest {
 
     @Autowired
-    private CmsService s;
+    private CmsServiceV2 s;
 
     final String bar = "============================================";
 

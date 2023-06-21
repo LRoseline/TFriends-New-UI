@@ -5,7 +5,7 @@
 <mapper namespace="com.tfriends.dao.CmsDAO">
     <!-- Search Query -->
     <sql id="search">
-        <if test='search_type == "all".toString()'>
+        <if test='dto.search_type == "all".toString()'>
             AND
             (
             <include refid="t" /> OR
@@ -13,26 +13,26 @@
             <include refid="w" />
             )
         </if>
-        <if test='search_type == "tnc".toString()'>
+        <if test='dto.search_type == "tnc".toString()'>
             AND
             (
             <include refid="t" /> OR
             <include refid="c" />
             )
         </if>
-        <if test='search_type == "title".toString()'>
+        <if test='dto.search_type == "title".toString()'>
             AND
             (
             <include refid="t" />
             )
         </if>
-        <if test='search_type == "writer".toString()'>
+        <if test='dto.search_type == "writer".toString()'>
             AND
             (
             <include refid="w" />
             )
         </if>
-        <if test='search_type == "content".toString()'>
+        <if test='dto.search_type == "content".toString()'>
             AND
             (
             <include refid="c" />
@@ -40,19 +40,19 @@
         </if>
     </sql>
     <sql id="t">
-        `title`like CONCAT('%', #{word}, '%')
+        `title`like CONCAT('%', #{dto.word}, '%')
     </sql>
     <sql id="c">
-        `content`like CONCAT('%', #{word}, '%')
+        `content`like CONCAT('%', #{dto.word}, '%')
     </sql>
     <sql id="w">
-        b.`name`like CONCAT('%', #{word}, '%')
+        b.`name`like CONCAT('%', #{dto.word}, '%')
     </sql>
 
     <!-- SQL Query -->
     <sql id="boardListSQL">
         <![CDATA[
-            FROM `community_${board}` as a
+            FROM `${board}` as a
             INNER JOIN `account_union`.`accounts` as b on a.writer = b.uno where `no` > 0
         ]]>
         <include refid="search"></include>
@@ -65,7 +65,7 @@
         ]]>
         <include refid="boardListSQL"></include>
         <![CDATA[
-            ORDER BY `no` DESC limit #{firstArticle},#{limit}
+            ORDER BY `no` DESC limit #{dto.firstArticle},#{dto.limit}
         ]]>
     </select>
     <select id="boardCount" resultType="int">

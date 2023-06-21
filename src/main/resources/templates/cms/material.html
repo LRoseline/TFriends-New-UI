@@ -21,11 +21,11 @@
         </form>
     </div>
     <div class="pagination" th:fragment="pagination">
-        <a class="page-c" th:classappend="${dto.page > 2} ? 'page-a' : 'page-disabled'" th:href="${dto.page > 2} ? |${uriparameter[2]}${dto.uriQuerys(1)}|">&laquo;</a>
-        <a class="page-c" th:classappend="${dto.page != 1} ? 'page-a' : 'page-disabled'" th:href="${dto.page > 1} ? |${uriparameter[2]}${dto.uriQuerys(dto.page - 1)}|">&lsaquo;</a>
+        <a class="page-c" th:classappend="${dto.page > 2} ? 'page-a' : 'page-disabled'" th:href="${dto.page > 2} ? |${hash}${dto.uriQuerys(1)}|">&laquo;</a>
+        <a class="page-c" th:classappend="${dto.page != 1} ? 'page-a' : 'page-disabled'" th:href="${dto.page > 1} ? |${hash}${dto.uriQuerys(dto.page - 1)}|">&lsaquo;</a>
         <input id="page" name="page" min="1" th:max="${page.end}" type="number" th:placeholder="|${dto.page} &sol; ${page.end}|">
         <a class="page-c page-a" onclick="jumpPage()" style="font-size: 20px; padding: 7px 12px; cursor: pointer;">Go</a>
-        <a class="page-c" th:classappend="${page.end > dto.page} ? 'page-a' : 'page-disabled'" th:href="${page.end > dto.page} ? |${uriparameter[2]}${dto.uriQuerys(dto.page + 1)}|">&rsaquo;</a>
-        <a class="page-c" th:classappend="${page.end > (dto.page + 1)} ? 'page-a' : 'page-disabled'" th:href="${page.end > (dto.page + 1)} ? |${uriparameter[2]}${dto.uriQuerys(page.end)}|">&raquo;</a>
+        <a class="page-c" th:classappend="${page.end > dto.page} ? 'page-a' : 'page-disabled'" th:href="${page.end > dto.page} ? |${hash}${dto.uriQuerys(dto.page + 1)}|">&rsaquo;</a>
+        <a class="page-c" th:classappend="${page.end > (dto.page + 1)} ? 'page-a' : 'page-disabled'" th:href="${page.end > (dto.page + 1)} ? |${hash}${dto.uriQuerys(page.end)}|">&raquo;</a>
     </div>
 </html>
