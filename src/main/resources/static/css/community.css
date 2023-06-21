@@ -1,0 +1,205 @@
+.head {
+    border: 3px solid #aaa;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 10px 0;
+    font-size: 24px;
+}
+
+.community {
+    display: flex;
+}
+
+.community-read {
+    display: flex;
+}
+
+.checklist-delete {
+    width: 20px;
+    vertical-align: top;
+    text-align: center;
+}
+
+.attribute {
+    border: 3px solid #aaa;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.article-date {
+    text-align: right;
+    font-size: 12px;
+    width: 90px;
+}
+
+#board-profile {
+    min-width: 150px;
+    margin-right: 10px;
+    max-height: 200px;
+    text-align: center;
+}
+
+#board-profile > div {
+    text-align: center;
+}
+
+.name-profile {
+    display: block;
+}
+
+#board-read {
+    width: 100%;
+    padding: 0;
+    height: 100%;
+}
+
+.title {
+    padding: 10px;
+    top: 0;
+    border-bottom: 4px dashed #0002;
+    display: flex;
+    overflow: hidden;
+    font-weight: bold;
+    font-size: 18pt;
+    position: relative;
+}
+
+.article > div {
+    padding: 10px;
+}
+
+.content {
+    min-height: 100px;
+}
+
+.article > div > img {
+    margin: 4px 0 0 0;
+    max-width: 100%;
+}
+
+#board-layout {
+    width: calc(100% - 10px);
+    margin-right: 10px;
+}
+
+#board-side {
+    width: 400px;
+}
+
+#board-side > div {
+    padding: 10px;
+    border: 3px solid #aaa;
+    border-radius: 10px;
+    max-height: 300px;
+    margin-bottom: 5px;
+}
+
+#title-text {
+    width: 100%;
+}
+
+.bottom-statue {
+    text-align: right;
+}
+
+.bottom-statue > button {
+    font-size: 20px;
+}
+
+.board-gravatar {
+    width: 80px;
+}
+
+.arc-table {
+    border: 3px solid #888;
+    border-collapse: collapse;
+}
+
+.arc-table td, .arc-table th {
+    border: 1px solid #AAA;
+    padding: 8px;
+}
+
+.yt-article {
+    width: 100%;
+    max-width: 740px;
+    height: 416px;
+    border: none;
+}
+
+code {
+    border: 2px solid #BBB;
+    padding: 8px;
+    font-family: auto;
+    margin: 10px 0;
+    display: block;
+    background-color: #EEE;
+}
+
+blockquote {
+    border: 2px solid #FA0;
+    padding: 8px;
+    font-family: auto;
+    margin: 10px 0;
+    background-color: #ffd9a0;
+}
+
+@media screen and (max-width: 650px) {
+    .head {
+        border: 1px none;
+        border-radius: 0;
+        padding: 0 10px;
+        border-style: solid none;
+        border-color: #aaa;
+        margin: 0;
+        font-size: 20px;
+    }
+
+    #board-layout {
+        width: 100%;
+        margin-right: 0;
+    }
+
+    .attribute {
+        border: 1px none;
+        border-radius: 0;
+        padding: 0;
+        border-style: solid none;
+        border-color: #aaa;
+    }
+
+    #board-side {
+        display: none;
+    }
+
+    .community-read {
+        display: block;
+    }
+    
+    #board-profile {
+        margin-right: 0;
+        margin-bottom: 5px;
+    }
+
+    #board-read {
+        width: auto;
+        height: auto;
+    }
+
+    #board-profile {
+        display: flex;
+    }
+
+    .board-gravatar {
+        width: 50px;
+    }
+
+    .name-profile {
+        display: flex;
+    }
+
+    .name-profile > div > div {
+        margin-left: 10px;
+        text-align: left;
+    }
+}

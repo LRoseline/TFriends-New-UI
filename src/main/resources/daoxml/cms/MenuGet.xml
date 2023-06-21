@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tfriends.dao.HomeDAO">
+    <resultMap id="MenuTree" type="MenuDTO" autoMapping="true">
+        <id column="l_menuno" property="menuno" javaType="int" />
+        <result column="l_menuname" property="menuname" javaType="String" />
+        <result column="l_menuurl" property="menuurl" javaType="String" />
+        <result column="l_parentby" property="parentby" javaType="String" />
+        <result column="l_type" property="type" javaType="String" />
+        <collection property="child" ofType="MenuDTO">
+            <id column="m_menuno" property="menuno" javaType="int" />
+            <result column="m_menuname" property="menuname" javaType="String" />
+            <result column="m_menuurl" property="menuurl" javaType="String" />
+            <result column="m_parentby" property="parentby" javaType="String" />
+            <result column="m_listorder" property="listorder" javaType="String" />
+            <result column="m_type" property="type" javaType="String" />
+        </collection>
+    </resultMap>
+    <select id="menuLoad" resultMap="MenuTree">
+        SELECT
+        l.menuno l_menuno,
+        l.menuname l_menuname,
+        l.menuurl l_menuurl,
+        l.parentby l_parentby,
+        l.`type` l_type,
+
+        m.menuno m_menuno,
+        m.menuname m_menuname,
+        m.menuurl m_menuurl,
+        m.`type` m_type,
+        m.parentby m_parentby
+
+        FROM `menu` AS l LEFT outer JOIN `menu` m ON (l.menuno = m.parentby)
+        WHERE l.parentby IS NULL ORDER BY l.menuno, m.listorder
+    </select>
+</mapper>

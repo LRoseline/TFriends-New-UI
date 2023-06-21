@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, maximum-scale=1, minimum-scale=1">
+    <title>Home</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="/src/main/resources/static/css/topmenu.css" rel="stylesheet" />
+    <link href="/src/main/resources/static/css/menu.css" rel="stylesheet" />
+    <link href="/src/main/resources/static/css/default.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="top-bar">
+        <button onclick="menuOpen()" class="top-menu">
+            <i class="fa fa-bars"></i>
+        </button>
+        <button onclick="href('/')" class="top-menu">
+            <i class="fa fa-home"></i>
+        </button>
+        <button class="top-menu">
+            <i class="fa fa-search"></i>
+        </button>
+    </div>
+    <div class="navigation-background">
+        <div class="navigation-background-sidebar">
+            <button class="sidebar-button" onclick="menuOpen()">
+                <i class="fa fa-times"></i>
+            </button>
+        </div>
+    </div>
+    <div class="navigation">      
+        <div id="login" style="display: block;">
+            <div id="profile">
+                <img src="/anoni.png" id="gravatar">
+                <div class="name" style="font-size: 0.75cm; padding-left: 6px;">익명의 누군가</div>
+            </div>
+            <div id="login-menu">
+                <button class="btn btn-my btn-sky" onclick="href('/register')" target="_parent">회원가입</button>
+                <a class="btn btn-my btn-green" href="/login?redirect=/community/notice" target="_parent">로그인</a>
+            </div>
+        </div>
+        <div class="nav-menu">
+            <nav class="navbar" style="display: block;">
+                <div>
+                    
+                    <a class="navi-menu navi-active" href="/community/notice">공지사항</a>
+                    
+                </div>
+                <div>
+                    <a href="#" class="navi-menu navi-default navi-child">
+                        <span>유저라운지</span><i id="group-arrow" class="fa fa-caret-down"></i>
+                    </a>
+                    
+                    <ul class="navi-dropmenu">
+                        <li>
+                            <a class="navi-default" href="/community/user">일반게시판</a>
+                        </li>
+                        <li>
+                            <a class="navi-default" href="/community/idea">아이디어</a>
+                        </li>
+                        <li>
+                            <a class="navi-default" href="/gallery/poll">투표</a>
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    
+                    <a class="navi-menu navi-default" href="/qna/cm">문의사항</a>
+                    
+                </div>
+            </nav>
+        </div>
+    </div>
+    <main>
+        Hello, world!
+    </main>
+    <footer>
+        Copyright ⓒ 2020-2023 T'friends. All rights reserved.
+    </footer>
+    <script src="/src/main/resources/static/js/sidebar.js"></script>
+</body>
+</html>

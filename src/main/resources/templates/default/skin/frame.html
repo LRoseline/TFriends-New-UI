@@ -1,0 +1,23 @@
+<html lang="ko" xmlns:th="https://www.thymeleaf.org" xmlns="https://www.w3.org/1999/xhtml">
+    <!-- 왼쪽 메뉴목록, 절대 건드리지 말 것! -->
+    <nav th:fragment="navbar" class="navbar">
+        <div th:each="menu : ${always}">
+            <a th:text="${menu.menuname}" class="navi-menu navi-default" th:href="|/community/${menu.menuurl}|" th:if="${menu.type == 'community'}"></a>
+            <a th:text="${menu.menuname}" class="navi-menu navi-default" th:href="|/topic/${menu.menuurl}|" th:if="${menu.type == 'topic'}"></a>
+            <a th:text="${menu.menuname}" class="navi-menu navi-default" th:href="${menu.menuurl}" th:if="${menu.type == 'url'}"></a>
+            <a th:text="${menu.menuname}" class="navi-menu navi-default" th:href="${menu.menuurl}" th:if="${menu.type == 'url-blank'}" target="_blank"></a>
+
+            <!-- 하위메뉴들 -->
+            <a th:if="${menu.type == 'dropdown'}" class="navi-menu navi-default navi-child" href="#">
+                <span th:text="${menu.menuname}"></span>
+                <i id="group-arrow" class="fa fa-caret-down"></i>
+            </a>
+            <div class="navi-dropmenu" th:if="${not #lists.isEmpty(menu.child)}">
+                <a th:each="submenu : ${menu.child}" th:text="${submenu.menuname}" class="navi-sub navi-default" th:href="|/community/${submenu.menuurl}|" th:if="${submenu.type == 'community'}"></a>
+                <a th:each="submenu : ${menu.child}" th:text="${submenu.menuname}" class="navi-sub navi-default" th:href="|/topic/${submenu.menuurl}|" th:if="${submenu.type == 'topic'}"></a>
+                <a th:each="submenu : ${menu.child}" th:text="${submenu.menuname}" class="navi-sub navi-default" th:href="${submenu.menuurl}" th:if="${submenu.type == 'url'}"></a>
+                <a th:each="submenu : ${menu.child}" th:text="${submenu.menuname}" class="navi-sub navi-default" th:href="${submenu.menuurl}" th:if="${submenu.type == 'url-blank'}" target="_blank"></a>    
+            </div>
+        </div>
+    </nav>
+</html>

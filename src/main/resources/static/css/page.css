@@ -1,0 +1,35 @@
+.pagination {
+    margin: 10px 0 10px 0;
+    display: flex;
+    justify-content: center;
+}
+
+.page-c {
+    font-family: Arial;
+    padding: 2px 14px 4px;
+    font-size: 26px;
+    text-decoration: none;
+    color: #FFF;
+    transition: 0.2s;
+}
+
+.page-a, .page-a:visited {
+    background-color: var(--asan-sky);
+}
+
+.page-a:hover {
+    background-color: rgba(0, 178, 222, 0.5);
+}
+
+.page-disabled {
+    background-color: #0005;
+    cursor: not-allowed;
+}
+
+.pagination > input {
+    margin: 0;
+    font-size: 20px;
+    width: 120px;
+    padding: 4px;
+    text-align: center;
+}

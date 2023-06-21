@@ -1,0 +1,196 @@
+/* Layout */
+.navigation-background {
+    z-index: 10;
+    width: 0;
+    height: 100%;
+    position: fixed;
+    right: 0;
+    top: 0;
+    background-color: #0009;
+    transition: 0.5s;
+}
+
+/* Login */
+#login {
+    width: 100%;
+    overflow: hidden;
+    display: none;
+    color: #FFF;
+    border-bottom: 2px solid snow;
+    margin: 0;
+}
+
+#gravatar {
+    width: 80px;
+}
+
+#profile {
+    width: 100%;
+    display: flex;
+}
+
+#login-menu {
+    position: relative;
+    float: right;
+    bottom: 0;
+    margin: 2px 5px 5px 0;
+}
+
+/* Menu */
+.navigation {
+    z-index: 11;
+    width: 0;
+    position: fixed;
+    background-color: #111;
+    top: 0;
+    left: 0;
+    height: 100%;
+    transition: 0.5s;
+}
+
+.nav-menu {
+    width: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    height: calc(100% - 170px);
+}
+
+.navbar {
+    display: none;
+}
+
+.nav-menu::-webkit-scrollbar {
+    width: 10px;
+}
+
+.nav-menu::-webkit-scrollbar-thumb {
+    background: #888;
+}
+
+.nav-menu ul {
+    list-style: none;
+}
+
+.navi-dropmenu {
+    background-color: #333;
+    display: none;
+    margin: 0;
+}
+
+.navbar > a {
+    font-size: 22px;
+    padding: 4px 16px;
+}
+
+.navi-dropmenu li {
+    font-size: 22px;
+    padding: 4px 0;
+}
+
+.navi-sub {
+    text-decoration: none;
+    font-size: 22px;
+    display: block;
+    width: auto;
+    padding: 5px 0 5px 40px;
+}
+
+#group-arrow {
+    float: right;
+    padding-right: 15px;
+    margin-top: 5px;
+    color: #818181;
+}
+
+.nav-menu a:hover, .nav-menu a:hover > #group-arrow {
+    color: #fff;
+    transition: 0.2s;
+}
+
+.navi-menu {
+    padding: 5px 10px 5px 20px;
+    text-decoration: none;
+    font-size: 25px;
+    display: block;
+}
+
+.navi-active {
+    color: #FFF;
+    transition: 0.2s;
+}
+
+.navi-default {
+    transition: 0.2s;
+    color: #818181;
+}
+
+.navi-select, .navi-select > #group-arrow {
+    color: rgb(255, 220, 154);
+}
+
+/* Sidebar Menu */
+.navigation-background-sidebar {
+    position: fixed;
+    right: 0;
+    top: 0;
+    height: 100%;
+}
+
+.sidebar-window {
+    width: calc(100% - 60px);
+}
+
+.sidebar-window select {
+    text-align: left;
+    background-color: #0000;
+    color: #FFF;
+    padding: 10px;
+    font-size: 0.6cm;
+    width: 100%;
+    border: none;
+}
+
+.sidebar-window option {
+    text-align: left;
+    color: #000;
+    font-size: 0.6cm;
+    width: 100%;
+}
+
+.close-bar {
+    width: 100%;
+    overflow: hidden;
+    text-align: right;
+    background-color: #FFF3;
+    display: flex;
+}
+
+.sidebar-button {
+    border: none;
+    background-color: #0000;
+    color: #FFF;
+    font-size: 1cm;
+    padding: 5px 15px;
+    border-radius: 40px;
+    transition: 0.2s;
+}
+
+.sidebar-button:hover {
+    background-color: #fff6;
+}
+
+.sidebar-button:active {
+    background-color: #fff9;
+    border-radius: 0;
+}
+
+/* Mobile */
+@media screen and (max-height: 400px) {
+    .navi-menu {
+        font-size: 20px;
+    }
+    
+    .navi-sub {
+        font-size: 18px;
+    }
+}

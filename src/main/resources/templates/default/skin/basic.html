@@ -1,0 +1,109 @@
+<html lang="ko" xmlns:th="https://www.thymeleaf.org" xmlns="https://www.w3.org/1999/xhtml">
+    <head>
+        <link rel="icon" href="/favicon.ico" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, maximum-scale=1, minimum-scale=1">
+        <link href="/css/fonts.css" rel="stylesheet" />
+        <link href="/css/default.css" rel="stylesheet" />
+        <link href="/css/asan.css" rel="stylesheet" />
+        <link href="/css/menu.css" rel="stylesheet" />
+        <link href="/css/topmenu.css" rel="stylesheet" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    </head>
+    <body>
+        <!-- 게시판 검색창 -->
+        <th:block layout:fragment="search"></th:block>
+
+        <div>
+            <!-- 상단 아일랜드식 네비게이션바 -->
+            <div class="top-bar">
+                <button onclick="menuOpen()">
+                    <i class="fa fa-bars"></i>
+                </button>
+                <button onclick="href('/')">
+                    <i class="fa fa-home"></i>
+                </button>
+                <th:block layout:fragment="navbar-custombtn">
+                </th:block>
+            </div>
+
+            <!-- 메뉴 오픈 시 검은 배경 -->
+            <div class="navigation-background"></div>
+
+            <!-- 네비게이션 바 -->
+            <div class="navigation">
+
+                <!-- 메뉴 닫기 -->
+                <div class="close-bar">
+                    <div class="sidebar-window">
+                        <select id="family-site" onchange="href(this.value)">
+                            <option value="#" selected>Family Site</option>
+                            <option value="https://tsukimorifriends.xyz">Home</option>
+                            <option value="https://www.tsukimorifriends.xyz">Broadcast</option>
+                            <option value="https://vrc.tsukimorifriends.xyz">VRChat</option>
+                        </select>
+                    </div>
+                    <button class="sidebar-button" onclick="menuOpen()">
+                        <i class="fa fa-times"></i>
+                    </button>
+                </div>
+
+                <!-- 로그인 폼 -->
+                <form id="login" th:method="post" sec:authorize="isAuthenticated()">
+                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" th:if="${_csrf} ne null" />
+                    <input type="hidden" th:value="${fulluri}" name="redirect" />
+                    <div id="profile">
+                        <img th:src="|https://www.gravatar.com/avatar/${authen.gravatar}|" id="gravatar" />
+                        <div class="name" style="font-size: 0.75cm; padding-left: 6px;">
+                            <div th:text="${authen.name}"></div>
+                            <div th:text="${authen.roles}"></div>
+                        </div>
+                    </div>
+                    <div id="login-menu">
+                        <button type="button" class="btn btn-my btn-blue" th:onclick="|href('/profile')|">MY</button>
+                        <button type="button" class="btn btn-my btn-sky" th:onclick="|hrefTab('@{${login}}/accounts')|">
+                            <i class="fa fa-cog"></i>
+                        </button>
+                        <button type="submit" class="btn btn-my btn-red" th:formaction="@{/logout}">
+                            <i class="fa fa-unlock"></i>
+                        </button>
+                    </div>
+                </form>
+                <div id="login" sec:authorize="!isAuthenticated()">
+                    <div id="profile">
+                        <img src="/anoni.png" id="gravatar" />
+                        <div class="name" style="font-size: 0.75cm; padding-left: 6px;">익명의 누군가</div>
+                    </div>
+                    <div id="login-menu">
+                        <button class="btn btn-my btn-sky" th:onclick="|href('@{${login}}/register')|">
+                            <i class="fa fa-user-plus"></i>
+                        </button>
+                        <button class="btn btn-my btn-green" th:onclick="|href('@{${login}}/login?redirect=@{${fulluri}}')|">
+                            <i class="fa fa-lock"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- 메뉴 리스트 -->
+                <div class="nav-menu">
+                    <nav th:replace="~{default/skin/frame :: navbar}"></nav>
+                </div>
+            </div>
+        </div>
+        <!-- 네비게이션 바 끝 -->
+        <main>
+            <th:block layout:fragment="main"></th:block>
+        </main>
+        <footer id="footer">
+
+        </footer>
+        <script src="/js/direction.js"></script>
+        <script src="/js/sidebar.js"></script>
+        <script crossorigin src="https://unpkg.com/react@17/umd/react.development.js"></script>
+        <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+        <script>
+            ReactDOM.render("Copyright ⓒ 2020-2023 T'friends. All rights reserved.", document.querySelector("#footer"));
+        </script>
+        <th:block layout:fragment="scripts">
+        </th:block>
+    </body>
+</html>

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tfriends.dao.CmsDAO">
+    <!-- Search Query -->
+    <sql id="search">
+        <if test='search_type == "all".toString()'>
+            AND
+            (
+            <include refid="t" /> OR
+            <include refid="c" /> OR
+            <include refid="w" />
+            )
+        </if>
+        <if test='search_type == "tnc".toString()'>
+            AND
+            (
+            <include refid="t" /> OR
+            <include refid="c" />
+            )
+        </if>
+        <if test='search_type == "title".toString()'>
+            AND
+            (
+            <include refid="t" />
+            )
+        </if>
+        <if test='search_type == "writer".toString()'>
+            AND
+            (
+            <include refid="w" />
+            )
+        </if>
+        <if test='search_type == "content".toString()'>
+            AND
+            (
+            <include refid="c" />
+            )
+        </if>
+    </sql>
+    <sql id="t">
+        `title`like CONCAT('%', #{word}, '%')
+    </sql>
+    <sql id="c">
+        `content`like CONCAT('%', #{word}, '%')
+    </sql>
+    <sql id="w">
+        b.`name`like CONCAT('%', #{word}, '%')
+    </sql>
+
+    <!-- SQL Query -->
+    <sql id="boardListSQL">
+        <![CDATA[
+            FROM `community_${board}` as a
+            INNER JOIN `account_union`.`accounts` as b on a.writer = b.uno where `no` > 0
+        ]]>
+        <include refid="search"></include>
+    </sql>
+
+    <!-- Standard Query -->
+    <select id="boardList" resultType="DefaultDTO">
+        <![CDATA[
+            SELECT a.`no`, a.`title`, b.`name`, a.`regdate`
+        ]]>
+        <include refid="boardListSQL"></include>
+        <![CDATA[
+            ORDER BY `no` DESC limit #{firstArticle},#{limit}
+        ]]>
+    </select>
+    <select id="boardCount" resultType="int">
+        <![CDATA[
+            SELECT COUNT(a.`no`)
+        ]]>
+        <include refid="boardListSQL"></include>
+    </select>
+
+    <select id="boardArticle" resultType="DefaultDTO">
+        SELECT
+        a.`no`, a.`title`, b.`name`, a.`writer`, MD5(b.`mail`) AS `gravatar`, c.`name` AS `roles` , `content`, `regdate`, `update`
+        FROM `community_${board}` as a
+        INNER JOIN `account_union`.`accounts` as b on a.`writer` = b.`uno`
+        INNER JOIN `account_union`.`roles` AS c ON b.`grade` = c.`no`
+        WHERE a.`no` = #{no}
+    </select>
+
+    <insert id="newArticle">
+        INSERT INTO
+        <if test="board != null and board != ''">
+            `community_${board}`
+        </if>
+        (`title`, `writer`, `content`) VALUES (#{dto.title}, #{dto.writer}, #{dto.content})
+    </insert>
+
+    <update id="updateArticle">
+        UPDATE `community_${board}` SET
+        `title` = #{dto.title},
+        `content` = #{dto.content},
+        `update` = NOW()
+        WHERE
+        `no` = #{dto.no} AND
+        `writer` = #{dto.writer}
+    </update>
+</mapper>

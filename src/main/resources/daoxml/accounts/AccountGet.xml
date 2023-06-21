@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tfriends.dao.AccountDAO">
+    <select id="loginInfo" resultType="AccountDTO">
+        SELECT `uno`, a.`name`, `mail`,
+        b.`name` AS `roles`, b.`no` AS `grade`, `certified`, MD5(`mail`) as `gravatar`
+        from account_union.accounts
+        AS `a` INNER JOIN account_union.roles AS b on a.`grade` = b.`no`
+        where uno = #{uno}
+    </select>
+</mapper>

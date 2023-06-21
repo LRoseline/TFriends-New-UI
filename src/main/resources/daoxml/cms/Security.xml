@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tfriends.dao.CmsDAO">
+    <insert id="newTrash">
+        INSERT INTO manager.trashcanboard (`body`, `workedbyid`, `workedbymail`, `workedbyip`) VALUES (#{body}, #{workedbyid}, #{workedbymail}, #{workedbyip})
+    </insert>
+    <select id="listRecycle" resultType="TrashDTO">
+        SELECT * FROM manager.trashcanboard
+    </select>
+</mapper>

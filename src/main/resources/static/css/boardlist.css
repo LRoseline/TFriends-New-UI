@@ -1,0 +1,66 @@
+.board-table {
+    width: 100%;
+    color: #000;
+    border-collapse: collapse;
+}
+
+.board-head-title {
+    text-align: left;
+}
+
+.board-table th {
+    background-color: var(--asan-gray);
+    padding: 5px;
+    color: white;
+}
+
+.board-table td {
+    padding: 5px;
+}
+
+.board-table > tbody tr:hover {
+    background-color: #0002;
+}
+
+.board-table a, .board-table a:visited {
+    color: #000;
+    text-decoration: none;
+}
+
+.board-list-detail {
+    display: flex;
+}
+
+.board-list-number {
+    text-align: right;
+    vertical-align: top;
+}
+
+.regdate {
+    width: 95px;
+}
+
+.writer {
+    border-left: 1px solid #000A;
+    padding-left: 4px;
+}
+
+.form-input-text {
+    margin: auto;
+    display: block;
+    width: 100%;
+    padding: 6px;
+    font-size: 18px;
+}
+
+#board-management {
+    margin: 0;
+}
+
+.board-new {
+    background-color: darkturquoise;
+    color: #FFF;
+    padding: 0 4px;
+    border-radius: 6px;
+    font-size: 14px;
+}

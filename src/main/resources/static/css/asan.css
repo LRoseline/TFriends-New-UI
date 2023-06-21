@@ -1,0 +1,94 @@
+:root {
+    --asan-red: #f42a40;
+    --asan-blue: #01209f;
+    --asan-sky: #00B3DE;
+    --asan-orange: #F36B43;
+    --asan-green: #62BD18;
+    --asan-gray: #898788;
+}
+
+.btn {
+    text-decoration: none;
+    padding: 0.3em 0.6em;
+    margin: 0.1em;
+    border-radius: 0.5em;
+    border: 0;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.btn-disable {
+    text-decoration: none;
+    padding: 0 0.4em 0 0.4em;
+    margin: 0.1em;
+    border-radius: 0.5em;
+    border: 0;
+    cursor: not-allowed;
+    background-color: var(--asan-gray);
+    color: #FFF;
+}
+
+.btn-red {
+    background-color: var(--asan-red);
+    color: #FFF;
+    transition: 200ms;
+}
+
+.btn-red:hover {
+    background-color: #f76e7e;
+    text-decoration: none;
+    transition: 200ms;
+}
+
+.btn-blue {
+    background-color: var(--asan-blue);
+    color: #FFF;
+    transition: 200ms;
+}
+
+.btn-blue:hover {
+    background-color: #0076BF;
+    text-decoration: none;
+    transition: 200ms;
+}
+
+.btn-sky {
+    background-color: var(--asan-sky);
+    color: #FFF;
+    transition: 200ms;
+}
+
+.btn-sky:hover {
+    background-color: #5CC4E8;
+    text-decoration: none;
+    transition: 200ms;
+}
+
+.btn-orange {
+    background-color: var(--asan-orange);
+    color: #FFF;
+    transition: 200ms;
+}
+
+.btn-green {
+    background-color: var(--asan-green);
+    color: #FFF;
+    transition: 200ms;
+}
+
+.btn-green:hover {
+    background-color: hsl(93, 65%, 50%);
+    text-decoration: none;
+    transition: 200ms;
+}
+
+.btn-gray {
+    background-color: var(--asan-gray);
+    color: #FFF;
+    transition: 200ms;
+}
+
+.btn-my {
+    font-size: 0.5cm;
+    min-width: 50px;
+}
