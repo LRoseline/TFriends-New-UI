@@ -3,6 +3,8 @@ package com.tfriends.dto.pagination;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -21,6 +23,7 @@ public class SearchDTOV2 {
         this.limit = 10;
     }
 
+    @JsonIgnore
     public int getFirstArticle() {
         return (this.page - 1) * limit;
     }

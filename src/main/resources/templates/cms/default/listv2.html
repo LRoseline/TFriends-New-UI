@@ -36,7 +36,7 @@
                                 </td>
                                 <td class="board-list-number" th:text="${list.no}">00000</td>
                                 <td>
-                                    <a th:href="|${hash}/read/${list.no}${dto.uriQuerys(dto.page)}|">
+                                    <a th:href="|${hash}/read/${list.no}${dto.uriQuerys(page.page)}|">
                                         <div>
                                             <span th:text="${list.title}"></span>
                                             <span class="board-new" th:if="${list.newArticle == 1}">N</span>

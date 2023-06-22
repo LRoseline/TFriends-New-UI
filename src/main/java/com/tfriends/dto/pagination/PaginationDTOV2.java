@@ -1,28 +1,18 @@
 package com.tfriends.dto.pagination;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class PaginationDTOV2 extends SearchDTOV2 {
     private int start, end;
-    private int totalpage;
 
-    private int pageJumpNum;
-
-    // private SearchDTOV2 count;
-
-    private void calc() {
-        this.pageJumpNum = 10;
-
+    public void setTotalpage(int articleCount) {
         this.start = 1;
-        this.end = (int) Math.ceil(totalpage / (double) getLimit());
-    }
-
-    public void setTotalpage(int totalpage) {
-        this.totalpage = totalpage;
-
-        calc();
+        this.end = (int) Math.ceil(articleCount / (double) getLimit());
     }
 }

@@ -1,6 +1,9 @@
 package com.tfriends.dto.cms;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.tfriends.dto.pagination.PaginationDTOV2;
+import com.tfriends.dto.system.ErrorDTO;
 import com.tfriends.dto.system.PermissionDTOv2;
 
 import lombok.Getter;
@@ -10,20 +13,24 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class SecureDTO {
-    @JsonIgnore
-    private int no;
-    private String name;
+    private ErrorDTO status;
 
     @JsonIgnore
-    private String type, url;
+    private int no;
+
+    private String type, name;
+
+    @JsonIgnore
+    private String url;
 
     @JsonIgnore
     public String getBoard() {
         return this.getType() + "_" + this.getUrl();
     }
 
-    public PermissionDTOv2 permission;
-
-    public Object result;
+    private PermissionDTOv2 permission;
+    private PaginationDTOV2 page;
+    private Object result;
 }

@@ -9,6 +9,7 @@ import com.tfriends.dao.CmsDAOV2;
 import com.tfriends.dto.cms.DefaultDTO;
 import com.tfriends.dto.cms.SecureDTO;
 import com.tfriends.dto.pagination.PaginationDTOV2;
+import com.tfriends.dto.system.ErrorDTO;
 import com.tfriends.dto.system.TrashDTO;
 
 @Service
@@ -19,18 +20,27 @@ public class CmsServiceV2 {
 
     public SecureDTO userBoardList(String hash, PaginationDTOV2 page) {
         SecureDTO secure = dao.secureWindow(hash);
-        page.setTotalpage(dao.boardCount(secure.getBoard(), page));
+        int code = 100;
 
-        if (page.getEnd() < page.getPage()) {
-            page.setPage(page.getEnd());
+        if(secure != null) {
+            secure.setPage(page);
+            page.setTotalpage(dao.boardCount(secure.getBoard(), page));
+    
+            if (page.getEnd() < page.getPage()) {
+                page.setPage(page.getEnd());
+            }
+    
+            if (page.getPage() <= 0) {
+                page.setPage(1);
+            }
+    
+            secure.setResult(dao.boardList(secure.getBoard(), page));
+            code = 200;
+        } else {
+            secure = new SecureDTO();
+            code = 404;
         }
-
-        if (page.getPage() <= 0) {
-            page.setPage(1);
-        }
-
-        secure.setResult(dao.boardList(secure.getBoard(), page));
-
+        secure.setStatus(new ErrorDTO(code));
         return secure;
     }
 

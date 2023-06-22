@@ -54,8 +54,6 @@
         <result column="type" property="type" />
         <result column="url" property="url" />
         <result column="name" property="name" />
-        <result column="hash" property="hash" />
-
         <collection property="permission" ofType="com.tfriends.dto.system.PermissionDTOv2">
             <result column="write" property="write" />
             <result column="read" property="read" />
