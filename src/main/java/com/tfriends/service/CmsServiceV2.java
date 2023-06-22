@@ -9,7 +9,6 @@ import com.tfriends.dao.CmsDAOV2;
 import com.tfriends.dto.cms.DefaultDTO;
 import com.tfriends.dto.cms.SecureDTO;
 import com.tfriends.dto.pagination.CountPageDTOV2;
-import com.tfriends.dto.system.PermissionDTO;
 import com.tfriends.dto.system.TrashDTO;
 
 @Service
@@ -20,10 +19,6 @@ public class CmsServiceV2 {
 
     public SecureDTO hashCheck(String hash) {
         return dao.secureWindow(hash);
-    }
-
-    public List<DefaultDTO> shortCommunityBoard(String board) {
-        return dao.widgetBoard(board);
     }
 
     public List<DefaultDTO> userBoardList(String board, CountPageDTOV2 dto) {
@@ -58,9 +53,5 @@ public class CmsServiceV2 {
 
     public List<TrashDTO> bearerTrash() {
         return dao.listRecycle();
-    }
-
-    public PermissionDTO getBoardPermission(String type, String menuurl) {
-        return dao.menuPermission(type, menuurl);
     }
 }

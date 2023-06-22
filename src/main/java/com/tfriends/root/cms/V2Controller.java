@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import com.tfriends.dto.cms.SecureDTO;
 import com.tfriends.dto.pagination.PaginationDTOV2;
 import com.tfriends.dto.pagination.SearchDTOV2;
-import com.tfriends.exception.BoardNotFoundException;
+import com.tfriends.exception.board.BoardNotFoundException;
 import com.tfriends.service.CmsServiceV2;
 
 @Controller
@@ -42,11 +42,11 @@ public class V2Controller {
 
             mdl.addAttribute("dto", dto);
             mdl.addAttribute("page", page);
+            secure.setResult(service.userBoardList(secure.getBoard(), dto));
 
             mdl.addAttribute("detail", secure);
-            mdl.addAttribute("board", service.userBoardList(secure.getBoard(), dto));
 
-            return "/cms/default/list";
+            return "/cms/default/listv2";
         } else {
             throw new BoardNotFoundException(hash);
         }

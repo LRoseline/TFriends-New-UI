@@ -5,7 +5,7 @@
 <mapper namespace="com.tfriends.dao.CmsDAO">
     <!-- Search Query -->
     <sql id="search">
-        <if test='dsearch_type == "all".toString()'>
+        <if test='search_type == "all".toString()'>
             AND
             (
             <include refid="t" /> OR
@@ -13,20 +13,20 @@
             <include refid="w" />
             )
         </if>
-        <if test='dsearch_type == "tnc".toString()'>
+        <if test='search_type == "tnc".toString()'>
             AND
             (
             <include refid="t" /> OR
             <include refid="c" />
             )
         </if>
-        <if test='dsearch_type == "title".toString()'>
+        <if test='search_type == "title".toString()'>
             AND
             (
             <include refid="t" />
             )
         </if>
-        <if test='dsearch_type == "writer".toString()'>
+        <if test='search_type == "writer".toString()'>
             AND
             (
             <include refid="w" />
@@ -52,7 +52,7 @@
     <!-- SQL Query -->
     <sql id="boardListSQL">
         <![CDATA[
-            FROM `${board}` as a
+            FROM `community_${board}` as a
             INNER JOIN `account_union`.`accounts` as b on a.writer = b.uno where `no` > 0
         ]]>
         <include refid="search"></include>

@@ -1,8 +1,7 @@
 package com.tfriends.dto.cms;
 
-import java.util.List;
-
-import com.tfriends.dto.system.PermissionDTO;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.tfriends.dto.system.PermissionDTOv2;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -12,12 +11,19 @@ import lombok.ToString;
 @Setter
 @ToString
 public class SecureDTO {
+    @JsonIgnore
     private int no;
-    private String type, url, name, hash;
+    private String name;
 
-    private List<PermissionDTO> permission;
+    @JsonIgnore
+    private String type, url;
 
+    @JsonIgnore
     public String getBoard() {
         return this.getType() + "_" + this.getUrl();
     }
+
+    public PermissionDTOv2 permission;
+
+    public Object result;
 }
