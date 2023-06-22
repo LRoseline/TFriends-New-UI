@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import com.tfriends.dto.cms.SecureDTO;
 import com.tfriends.dto.pagination.PaginationDTOV2;
 import com.tfriends.dto.pagination.SearchDTOV2;
+import com.tfriends.exception.BoardNotFoundException;
 import com.tfriends.service.CmsServiceV2;
 
 @Controller
@@ -24,10 +25,10 @@ public class V2Controller {
     }
 
     @GetMapping("/cmsv2/{hash}")
-    public Object defaultBoard(PaginationDTOV2 page, Model mdl, @PathVariable("hash") String hash, SearchDTOV2 dto) {
-        try {
-            SecureDTO secure = this.hashCheck(hash);
+    public String defaultBoard(PaginationDTOV2 page, Model mdl, @PathVariable("hash") String hash, SearchDTOV2 dto) {
+        SecureDTO secure = this.hashCheck(hash);
 
+        if (secure != null) {
             page.setCount(dto);
             page.setTotalpage(service.userBoardCount(secure.getBoard(), dto));
 
@@ -46,9 +47,8 @@ public class V2Controller {
             mdl.addAttribute("board", service.userBoardList(secure.getBoard(), dto));
 
             return "/cms/default/list";
-        } catch (Exception e) {
-            e.printStackTrace();
-            return "/cms/default/list";
+        } else {
+            throw new BoardNotFoundException(hash);
         }
     }
 
