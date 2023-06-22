@@ -11,7 +11,7 @@ public class PaginationDTOV2 {
 
     private int pageJumpNum;
 
-    private CountPageDTOV2 count;
+    private SearchDTOV2 count;
 
     private void calc() {
         this.pageJumpNum = 10;

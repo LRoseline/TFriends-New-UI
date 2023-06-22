@@ -18,15 +18,9 @@ public class V2Controller {
     @Autowired
     private CmsServiceV2 service;
 
-    public SecureDTO hashCheck(String hash) {
-        SecureDTO secure = service.hashCheck(hash);
-
-        return secure;
-    }
-
     @GetMapping("/cmsv2/{hash}")
     public String defaultBoard(PaginationDTOV2 page, Model mdl, @PathVariable("hash") String hash, SearchDTOV2 dto) {
-        SecureDTO secure = this.hashCheck(hash);
+        SecureDTO secure = service.hashCheck(hash);
 
         if (secure != null) {
             page.setCount(dto);

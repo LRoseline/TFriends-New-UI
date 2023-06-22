@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import com.tfriends.dao.CmsDAOV2;
 import com.tfriends.dto.cms.DefaultDTO;
 import com.tfriends.dto.cms.SecureDTO;
-import com.tfriends.dto.pagination.CountPageDTOV2;
+import com.tfriends.dto.pagination.SearchDTOV2;
 import com.tfriends.dto.system.TrashDTO;
 
 @Service
@@ -21,11 +21,11 @@ public class CmsServiceV2 {
         return dao.secureWindow(hash);
     }
 
-    public List<DefaultDTO> userBoardList(String board, CountPageDTOV2 dto) {
+    public List<DefaultDTO> userBoardList(String board, SearchDTOV2 dto) {
         return dao.boardList(board, dto);
     }
 
-    public int userBoardCount(String board, CountPageDTOV2 dto) {
+    public int userBoardCount(String board, SearchDTOV2 dto) {
         return dao.boardCount(board, dto);
     }
 

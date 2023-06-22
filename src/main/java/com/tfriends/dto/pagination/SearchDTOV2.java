@@ -8,13 +8,21 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class SearchDTOV2 extends CountPageDTOV2 {
-    private String search_type;
-    private String word;
+public class SearchDTOV2 {
+    private String search_type, word;
+
+    private int page, limit;
 
     public SearchDTOV2() {
         this.search_type = "all";
         this.word = "";
+
+        this.page = 1;
+        this.limit = 10;
+    }
+
+    public int getFirstArticle() {
+        return (this.page - 1) * limit;
     }
 
     public String uriQuerys(int page) {
