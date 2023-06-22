@@ -55,7 +55,6 @@ public class CmsRest {
         SecureDTO secure = this.hashCheck(hash);
 
         if (secure != null) {
-            page.setCount(dto);
             page.setTotalpage(cms.userBoardCount(secure.getBoard(), dto));
 
             if (page.getEnd() < dto.getPage()) {

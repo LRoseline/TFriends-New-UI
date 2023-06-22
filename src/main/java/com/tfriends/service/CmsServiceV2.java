@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import com.tfriends.dao.CmsDAOV2;
 import com.tfriends.dto.cms.DefaultDTO;
 import com.tfriends.dto.cms.SecureDTO;
-import com.tfriends.dto.pagination.SearchDTOV2;
+import com.tfriends.dto.pagination.PaginationDTOV2;
 import com.tfriends.dto.system.TrashDTO;
 
 @Service
@@ -17,16 +17,21 @@ public class CmsServiceV2 {
     @Autowired
     private CmsDAOV2 dao;
 
-    public SecureDTO hashCheck(String hash) {
-        return dao.secureWindow(hash);
-    }
+    public SecureDTO userBoardList(String hash, PaginationDTOV2 page) {
+        SecureDTO secure = dao.secureWindow(hash);
+        page.setTotalpage(dao.boardCount(secure.getBoard(), page));
 
-    public List<DefaultDTO> userBoardList(String board, SearchDTOV2 dto) {
-        return dao.boardList(board, dto);
-    }
+        if (page.getEnd() < page.getPage()) {
+            page.setPage(page.getEnd());
+        }
 
-    public int userBoardCount(String board, SearchDTOV2 dto) {
-        return dao.boardCount(board, dto);
+        if (page.getPage() <= 0) {
+            page.setPage(1);
+        }
+
+        secure.setResult(dao.boardList(secure.getBoard(), page));
+
+        return secure;
     }
 
     public DefaultDTO userBoardRead(String board, int no) {
