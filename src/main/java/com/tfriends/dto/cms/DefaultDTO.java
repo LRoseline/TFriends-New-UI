@@ -1,9 +1,8 @@
 package com.tfriends.dto.cms;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.Calendar;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.tfriends.dto.BBCodeFilter;
@@ -26,11 +25,7 @@ public class DefaultDTO {
 
     private String roles;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
-    private Date regdate;
-
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
-    private Date update;
+    private Timestamp datatime;
 
     // bb코드 원본
     private String content;
@@ -47,8 +42,8 @@ public class DefaultDTO {
     public int getNewArticle() {
         Calendar calNowDate = Calendar.getInstance();
         Calendar calOldDate = Calendar.getInstance();
-        java.util.Date date = new java.util.Date(regdate.getTime());
-        java.util.Date now = new java.util.Date();
+        Date date = new Date(datatime.getRegdate().getTime());
+        Date now = new Date();
 
         calNowDate.setTime(now);
 

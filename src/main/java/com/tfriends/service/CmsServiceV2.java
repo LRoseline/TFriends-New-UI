@@ -18,22 +18,24 @@ public class CmsServiceV2 {
     @Autowired
     private CmsDAOV2 dao;
 
-    public SecureDTO userBoardList(String hash, PaginationDTOV2 page) {
-        SecureDTO secure = dao.secureWindow(hash);
-        int code = 100;
+    SecureDTO secure;
+    int code = 100;
 
-        if(secure != null) {
+    public SecureDTO userBoardList(String hash, PaginationDTOV2 page) {
+        secure = dao.secureWindow(hash);
+
+        if (secure != null) {
             secure.setPage(page);
             page.setTotalpage(dao.boardCount(secure.getBoard(), page));
-    
+
             if (page.getEnd() < page.getPage()) {
                 page.setPage(page.getEnd());
             }
-    
+
             if (page.getPage() <= 0) {
                 page.setPage(1);
             }
-    
+
             secure.setResult(dao.boardList(secure.getBoard(), page));
             code = 200;
         } else {
@@ -44,8 +46,26 @@ public class CmsServiceV2 {
         return secure;
     }
 
-    public DefaultDTO userBoardRead(String board, int no) {
-        return dao.boardArticle(board, no);
+    public SecureDTO userBoardRead(String hash, int no, PaginationDTOV2 page) {
+        secure = dao.secureWindow(hash);
+
+        if (secure != null) {
+            DefaultDTO article = dao.boardArticle(secure.getBoard(), no);
+            if (secure.getPermission().getRead() == 0 && article != null) {
+                secure.setPage(page);
+                secure.setResult(article);
+                code = 200;
+            } else {
+                code = 403;
+                secure.setResult("권한이 없거나 해당 게시글이 없습니다.");
+            }
+        } else {
+            secure = new SecureDTO();
+            code = 404;
+        }
+
+        secure.setStatus(new ErrorDTO(code));
+        return secure;
     }
 
     public void regArticle(String board, DefaultDTO dto) {

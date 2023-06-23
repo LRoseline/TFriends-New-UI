@@ -23,13 +23,11 @@ public class V2Controller {
         return new ModelAndView("/cms/default/listv2", "detail", result);
     }
 
-    @GetMapping("/cmsv2/{hash}/read")
-    public String defaultBoardRead(@PathVariable("hash") String hash) {
+    @GetMapping("/cmsv2/{hash}/read/{arcno}")
+    public ModelAndView defaultBoardRead(@PathVariable("hash") String hash, @PathVariable("arcno") int no,
+            PaginationDTOV2 page) {
+        SecureDTO result = service.userBoardRead(hash, no, page);
 
-        if (hash == null) {
-
-        }
-
-        return "/cms/default/read";
+        return new ModelAndView("/cms/default/readv2", "detail", result);
     }
 }

@@ -48,4 +48,12 @@ public class CmsRest {
 
         return new ResponseEntity<Object>(secure, HttpStatusCode.valueOf(secure.getStatus().getCod()));
     }
+
+    @GetMapping("/v2/{hash}/read/{arcno}")
+    public ResponseEntity<Object> defaultBoardRead(@PathVariable("hash") String hash, @PathVariable("arcno") int no,
+            PaginationDTOV2 page) {
+        SecureDTO secure = cms.userBoardRead(hash, no, page);
+
+        return new ResponseEntity<Object>(secure, HttpStatusCode.valueOf(secure.getStatus().getCod()));
+    }
 }

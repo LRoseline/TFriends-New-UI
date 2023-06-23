@@ -49,6 +49,7 @@
         b.`name`like CONCAT('%', #{dto.word}, '%')
     </sql>
 
+    <!-- ResultMap -->
     <resultMap id="secureDtoResultMap" type="com.tfriends.dto.cms.SecureDTO">
         <id column="no" property="no" />
         <result column="type" property="type" />
@@ -59,13 +60,27 @@
             <result column="read" property="read" />
         </collection>
     </resultMap>
+
+    <resultMap id="articleReadMap" type="com.tfriends.dto.cms.DefaultDTO">
+        <id column="no" property="no" />
+        <result column="title" property="title" />
+        <result column="name" property="name" />
+        <result column="writer" property="writer" />
+        <result column="gravatar" property="gravatar" />
+        <result column="roles" property="roles" />
+        <result column="content" property="content" />
+        <collection property="datatime" ofType="com.tfriends.dto.cms.Timestamp">
+            <result column="regdate" property="regdate" />
+            <result column="update" property="update" />
+        </collection>
+    </resultMap>
     
     <select id="secureWindow" resultMap="secureDtoResultMap">
         SELECT `type`,`url`,`name`,`write`,`read` FROM boards WHERE `hash` = #{hash}
     </select>
 
     <!-- BoardList Query -->
-    <select id="boardList" resultType="DefaultDTO">
+    <select id="boardList" resultMap="articleReadMap">
         <![CDATA[
             SELECT a.`no`, a.`title`, b.`name`, a.`regdate`
         ]]>
@@ -89,10 +104,10 @@
     </sql>
 
     <!-- RWX Query -->
-    <select id="boardArticle" resultType="DefaultDTO">
+    <select id="boardArticle" resultMap="articleReadMap">
         SELECT
         a.`no`, a.`title`, b.`name`, a.`writer`, MD5(b.`mail`) AS `gravatar`, c.`name` AS `roles` , `content`, `regdate`, `update`
-        FROM `community_${board}` as a
+        FROM `${board}` as a
         INNER JOIN `account_union`.`accounts` as b on a.`writer` = b.`uno`
         INNER JOIN `account_union`.`roles` AS c ON b.`grade` = c.`no`
         WHERE a.`no` = #{no}
