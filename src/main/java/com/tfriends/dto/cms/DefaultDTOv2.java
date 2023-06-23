@@ -15,7 +15,7 @@ import lombok.ToString;
 @Setter
 @ToString
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class DefaultDTO {
+public class DefaultDTOv2 {
     private int no;
     private String title;
 
@@ -25,8 +25,7 @@ public class DefaultDTO {
 
     private String roles;
 
-    private java.sql.Date regdate;
-    private java.sql.Date update;
+    private Timestamp datatime;
 
     // bb코드 원본
     private String content;
@@ -43,7 +42,7 @@ public class DefaultDTO {
     public int getNewArticle() {
         Calendar calNowDate = Calendar.getInstance();
         Calendar calOldDate = Calendar.getInstance();
-        Date date = new Date(regdate.getTime());
+        Date date = new Date(datatime.getRegdate().getTime());
         Date now = new Date();
 
         calNowDate.setTime(now);

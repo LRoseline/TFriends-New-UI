@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.tfriends.dao.CmsDAOV2;
 import com.tfriends.dto.AccountDTO;
-import com.tfriends.dto.cms.DefaultDTO;
+import com.tfriends.dto.cms.DefaultDTOv2;
 import com.tfriends.dto.cms.SecureDTO;
 import com.tfriends.dto.pagination.PaginationDTOV2;
 import com.tfriends.dto.system.ErrorDTO;
@@ -18,6 +18,9 @@ public class CmsServiceV2 {
 
     @Autowired
     private CmsDAOV2 dao;
+
+    @Autowired
+    private AccountService accounts;
 
     SecureDTO secure;
     int code = 100;
@@ -51,7 +54,7 @@ public class CmsServiceV2 {
         secure = dao.secureWindow(hash);
 
         if (secure != null) {
-            DefaultDTO article = dao.boardArticle(secure.getBoard(), no);
+            DefaultDTOv2 article = dao.boardArticle(secure.getBoard(), no);
             if (secure.getPermission().getRead() == 0 && article != null) {
                 secure.setPage(page);
                 secure.setResult(article);
@@ -69,28 +72,56 @@ public class CmsServiceV2 {
         return secure;
     }
 
-    public SecureDTO regArticle(String hash, DefaultDTO dto, AccountDTO user) {
-        secure = dao.secureWindow(hash);
+    public SecureDTO regArticle(String hash, DefaultDTOv2 dto) {
+        try {
+            AccountDTO user = accounts.getAuthen();
+            secure = dao.secureWindow(hash);
 
-        if (secure != null) {
-            if (secure.getPermission().getWrite() >= user.getGrade()) {
-                dao.newArticle(secure.getBoard(), dto);
-                code = 201;
+            if (secure != null && dto.getWriter() == 0) {
+                if (secure.getPermission().getWrite() <= user.getGrade()) {
+                    dto.setWriter(user.getUno());
+                    dao.newArticle(secure.getBoard(), dto);
+                    secure.setResult("게시글이 정상적으로 등록되었습니다.");
+                    code = 201;
+                } else {
+                    code = 403;
+                    secure.setResult("게시판 쓰기 권한이 없습니다.");
+                }
             } else {
-                code = 403;
-                secure.setResult("게시판 쓰기 권한이 없습니다.");
+                secure = new SecureDTO();
+                code = 405;
             }
-        } else {
+        } catch (Exception e) {
             secure = new SecureDTO();
-            code = 405;
+            code = 401;
         }
 
         secure.setStatus(new ErrorDTO(code));
         return secure;
     }
 
-    public void editArticle(String board, DefaultDTO dto) {
-        dao.updateArticle(board, dto);
+    public SecureDTO editArticle(String hash, DefaultDTOv2 dto, int no) {
+        try {
+            AccountDTO user = accounts.getAuthen();
+            secure = dao.secureWindow(hash);
+            if (secure != null && dto.getWriter() == 0 && dto.getNo() == 0) {
+                dto.setNo(no);
+                dto.setWriter(user.getUno());
+
+                dao.updateArticle(secure.getBoard(), dto);
+                secure.setResult(dao.boardArticle(secure.getBoard(), no));
+                code = 200;
+            } else {
+                secure = new SecureDTO();
+                code = 405;
+            }
+        } catch (Exception e) {
+            secure = new SecureDTO();
+            code = 401;
+        }
+
+        secure.setStatus(new ErrorDTO(code));
+        return secure;
     }
 
     public boolean deleteArticle(String category, int i) {

@@ -8,5 +8,5 @@ import lombok.ToString;
 @Setter
 @ToString
 public class WidgetDTO {
-    private DefaultDTO dto;
+    private DefaultDTOv2 dto;
 }

@@ -61,7 +61,7 @@
         </collection>
     </resultMap>
 
-    <resultMap id="articleReadMap" type="com.tfriends.dto.cms.DefaultDTO">
+    <resultMap id="articleReadMap" type="com.tfriends.dto.cms.DefaultDTOv2">
         <id column="no" property="no" />
         <result column="title" property="title" />
         <result column="name" property="name" />
@@ -114,15 +114,12 @@
     </select>
 
     <insert id="newArticle">
-        INSERT INTO
-        <if test="board != null and board != ''">
-            `community_${board}`
-        </if>
+        INSERT INTO `${board}`
         (`title`, `writer`, `content`) VALUES (#{dto.title}, #{dto.writer}, #{dto.content})
     </insert>
 
     <update id="updateArticle">
-        UPDATE `community_${board}` SET
+        UPDATE `${board}` SET
         `title` = #{dto.title},
         `content` = #{dto.content},
         `update` = NOW()

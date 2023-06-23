@@ -25,9 +25,9 @@ public class SecurityConfig {
 		HttpSessionRequestCache requestCache = new HttpSessionRequestCache();
 		http
 				.sessionManagement(s -> s
-					.sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
-					.maximumSessions(1)
-					.expiredUrl("/expired"))
+						.sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
+						.maximumSessions(1)
+						.expiredUrl("/expired"))
 				.authorizeHttpRequests((authz) -> authz
 						.requestMatchers("/nsfw/**").hasRole("ADMIN")
 						.requestMatchers("/*/*/write", "/*/*/edit").authenticated()
@@ -39,6 +39,7 @@ public class SecurityConfig {
 						.accessDeniedPage("/access-denied"))
 				.csrf(cs -> cs
 						.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))
+				// .disable())
 				.requestCache(c -> c
 						.requestCache(requestCache));
 		return http.build();

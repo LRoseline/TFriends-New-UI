@@ -1,6 +1,7 @@
 package com.tfriends.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.tfriends.dao.AccountDAO;
@@ -18,5 +19,11 @@ public class AccountService {
 
     public String getLoginURL() {
         return dao.subURL();
+    }
+
+    public AccountDTO getAuthen() {
+        AccountDTO auth = (AccountDTO) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        return dao.loginInfo(auth.getUno());
     }
 }

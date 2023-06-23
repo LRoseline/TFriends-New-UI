@@ -7,6 +7,6 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class QnADTO extends DefaultDTO {
-    private List<DefaultDTO> reply;
+public class QnADTO extends DefaultDTOv2 {
+    private List<DefaultDTOv2> reply;
 }
