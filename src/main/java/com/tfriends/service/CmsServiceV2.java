@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.tfriends.dao.CmsDAOV2;
+import com.tfriends.dto.AccountDTO;
 import com.tfriends.dto.cms.DefaultDTO;
 import com.tfriends.dto.cms.SecureDTO;
 import com.tfriends.dto.pagination.PaginationDTOV2;
@@ -68,9 +69,24 @@ public class CmsServiceV2 {
         return secure;
     }
 
-    public void regArticle(String hash, DefaultDTO dto) {
+    public SecureDTO regArticle(String hash, DefaultDTO dto, AccountDTO user) {
         secure = dao.secureWindow(hash);
-        dao.newArticle(secure.getBoard(), dto);
+
+        if (secure != null) {
+            if (secure.getPermission().getWrite() >= user.getGrade()) {
+                dao.newArticle(secure.getBoard(), dto);
+                code = 201;
+            } else {
+                code = 403;
+                secure.setResult("게시판 쓰기 권한이 없습니다.");
+            }
+        } else {
+            secure = new SecureDTO();
+            code = 405;
+        }
+
+        secure.setStatus(new ErrorDTO(code));
+        return secure;
     }
 
     public void editArticle(String board, DefaultDTO dto) {
