@@ -68,8 +68,9 @@ public class CmsServiceV2 {
         return secure;
     }
 
-    public void regArticle(String board, DefaultDTO dto) {
-        dao.newArticle(board, dto);
+    public void regArticle(String hash, DefaultDTO dto) {
+        secure = dao.secureWindow(hash);
+        dao.newArticle(secure.getBoard(), dto);
     }
 
     public void editArticle(String board, DefaultDTO dto) {
