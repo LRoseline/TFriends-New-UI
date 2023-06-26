@@ -17,10 +17,6 @@ public class AccountService {
         return dao.loginInfo(uno);
     }
 
-    public String getLoginURL() {
-        return dao.subURL();
-    }
-
     public AccountDTO getAuthen() {
         AccountDTO auth = (AccountDTO) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 

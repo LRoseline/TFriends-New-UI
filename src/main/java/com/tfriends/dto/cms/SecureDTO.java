@@ -1,5 +1,7 @@
 package com.tfriends.dto.cms;
 
+import java.util.Date;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.tfriends.dto.pagination.PaginationDTOV2;
@@ -22,6 +24,7 @@ public class SecureDTO {
 
     private String type, name;
 
+
     @JsonIgnore
     private String url;
 
@@ -33,4 +36,9 @@ public class SecureDTO {
     private PermissionDTOv2 permission;
     private PaginationDTOV2 page;
     private Object result;
+
+    @JsonIgnore
+    public Date getCurrent () {
+        return new Date();
+    }
 }

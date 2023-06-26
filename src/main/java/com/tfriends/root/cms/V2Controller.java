@@ -20,6 +20,7 @@ public class V2Controller {
     public ModelAndView defaultBoard(PaginationDTOV2 page, @PathVariable("hash") String hash) {
         SecureDTO result = service.userBoardList(hash, page);
 
+        System.out.println(result);
         return new ModelAndView("/cms/default/listv2", "detail", result);
     }
 

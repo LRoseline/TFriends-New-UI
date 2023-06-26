@@ -9,11 +9,9 @@ import com.tfriends.dto.BBCodeFilter;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
 @Getter
 @Setter
-@ToString
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class DefaultDTOv2 {
     private int no;

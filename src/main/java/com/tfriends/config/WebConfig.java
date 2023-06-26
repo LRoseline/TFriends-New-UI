@@ -18,12 +18,12 @@ public class WebConfig implements WebMvcConfigurer {
 
     // @Bean
     // CookieSerializer cookie() {
-    // DefaultCookieSerializer serial = new DefaultCookieSerializer();
-    // serial.setDomainName("tsukimorifriends.xyz");
-    // serial.setCookieName("JSESSIONID");
-    // serial.setCookiePath("/");
+    //     DefaultCookieSerializer serial = new DefaultCookieSerializer();
+    //     serial.setDomainName("tsukimorifriends.xyz");
+    //     serial.setCookieName("JSESSIONID");
+    //     serial.setCookiePath("/");
 
-    // return serial;
+    //     return serial;
     // }
 
     @Bean
@@ -39,7 +39,7 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(homeInterceptor()).addPathPatterns("/**");
-        registry.addInterceptor(boardInterceptor()).addPathPatterns("/community/**");
+        registry.addInterceptor(boardInterceptor()).addPathPatterns("/community/**", "/cmsv2/**");
     }
 
     @Override

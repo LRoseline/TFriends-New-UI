@@ -1,0 +1,31 @@
+<html lang="ko" xmlns:th="https://www.thymeleaf.org" xmlns="https://www.w3.org/1999/xhtml">
+    <div th:fragment="search" class="search-pop">
+        <div style="display: flex;">
+            <div class="search-tab">게시글 검색</div>
+            <button class="search-close" onclick="openSearch('none')">
+                <i class="fa fa-times"></i>
+            </button>
+        </div>
+        <form class="search-box">
+            <select name="search_type">
+                <option th:selected="${search_type} == 'all'" value="all">전체</option>
+                <option th:selected="${search_type} == 'writer'" value="writer">작성자</option>
+                <option th:selected="${search_type} == 'title'" value="title">제목</option>
+                <option th:selected="${search_type} == 'tnc'" value="tnc">제목+내용</option>
+                <option th:selected="${search_type} == 'content'" value="content">내용</option>
+            </select>
+            <input type="search" name="word" th:value="${word}" required />
+            <button type="submit" class="btn btn-sky submit">
+                <i class="fa fa-search"></i>
+            </button>
+        </form>
+    </div>
+    <div class="pagination" th:fragment="pagination">
+        <a class="page-c" th:classappend="${detail.page.page > 2} ? 'page-a' : 'page-disabled'" th:href="${detail.page.page > 2} ? |${hash}${detail.page.uriQuerys(1)}|">&laquo;</a>
+        <a class="page-c" th:classappend="${detail.page.page != 1} ? 'page-a' : 'page-disabled'" th:href="${detail.page.page > 1} ? |${hash}${detail.page.uriQuerys(detail.page.page - 1)}|">&lsaquo;</a>
+        <input id="page" name="page" min="1" th:max="${detail.page.end}" type="number" th:placeholder="|${detail.page.page} &sol; ${detail.page.end}|">
+        <a class="page-c page-a" onclick="jumpPage()" style="font-size: 20px; padding: 7px 12px; cursor: pointer;">Go</a>
+        <a class="page-c" th:classappend="${detail.page.end > detail.page.page} ? 'page-a' : 'page-disabled'" th:href="${detail.page.end > detail.page.page} ? |${hash}${detail.page.uriQuerys(detail.page.page + 1)}|">&rsaquo;</a>
+        <a class="page-c" th:classappend="${detail.page.end > (detail.page.page + 1)} ? 'page-a' : 'page-disabled'" th:href="${detail.page.end > (detail.page.page + 1)} ? |${hash}${detail.page.uriQuerys(page.end)}|">&raquo;</a>
+    </div>
+</html>

@@ -21,7 +21,7 @@ import com.tfriends.service.CmsServiceV2;
 import com.tfriends.service.HomeService;
 
 @RestController
-@RequestMapping("/api/community")
+@RequestMapping("/rss")
 public class CmsRest {
 
     @GetMapping("/normal")

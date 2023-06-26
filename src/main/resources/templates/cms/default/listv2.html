@@ -36,13 +36,14 @@
                                 </td>
                                 <td class="board-list-number" th:text="${list.no}">00000</td>
                                 <td>
-                                    <a th:href="|${hash}/read/${list.no}${dto.uriQuerys(page.page)}|">
+                                    <a th:href="|${hash}/read/${list.no}${detail.page.uriQuerys(detail.page.page)}|">
                                         <div>
                                             <span th:text="${list.title}"></span>
                                             <span class="board-new" th:if="${list.newArticle == 1}">N</span>
                                         </div>
                                         <div class="board-list-detail">
-                                            <div class="regdate" th:text="${list.regdate}">2023-06-01</div>
+                                            <div class="regdate" th:if="${#dates.format(list.datatime.regdate, 'yyyy-MM-dd') == #dates.format(detail.current, 'yyyy-MM-dd')}" th:text="${#dates.format(list.datatime.regdate, 'HH:mm')}">00:00</div>
+                                            <div class="regdate" th:unless="${#dates.format(list.datatime.regdate, 'yyyy-MM-dd') == #dates.format(detail.current, 'yyyy-MM-dd')}" th:text="${#dates.format(list.datatime.regdate, 'yyyy-MM-dd')}">1972-11-21</div>
                                             <div class="writer" th:text="${list.name}">User</div>
                                         </div>
                                     </a>
@@ -53,13 +54,13 @@
                     <table class="board-table" th:if="${#lists.isEmpty(detail.result)}">
                         <td style="height: 200px; vertical-align: middle; text-align: center; font-size: 20px;">작성된 글이 없어요!</td>
                     </table>
-                    <div th:unless="${#lists.isEmpty(detail.result)}" th:insert="~{cms/material :: pagination}"></div>
-                    <input type="hidden" name="search_type" th:value="${dto.search_type}" />
-                    <input type="hidden" name="word" th:value="${dto.word}" />
+                    <div th:unless="${#lists.isEmpty(detail.result)}" th:insert="~{cms/materialv2 :: pagination}"></div>
+                    <input type="hidden" name="search_type" th:value="${detail.page.search_type}" />
+                    <input type="hidden" name="word" th:value="${detail.page.word}" />
                     <input sec:authorize="isAuthenticated()" type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
                 </form>
                 <div sec:authorize="isAuthenticated()" style="margin-bottom: 10px; padding: 0 10px;">
-                    <button class="btn btn-blue" th:if="${permission.permissionWrite &lt;= authen.grade || authen.roles == 'ROLE_ADMIN'}" th:onclick="|href('@{${hash}}/write')|">새로 작성하기</button>
+                    <button class="btn btn-blue" th:if="${detail.permission.write &lt;= authen.grade || authen.roles == 'ROLE_ADMIN'}" th:onclick="|href('@{${hash}}/write')|">새로 작성하기</button>
                     <button class="btn btn-red" onclick="confirmDel('#board-management')" th:if="${authen != null && authen.roles == 'ROLE_ADMIN'}">선택항목 삭제</button>
                 </div>
             </div>

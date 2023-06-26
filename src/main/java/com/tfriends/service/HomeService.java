@@ -17,4 +17,8 @@ public class HomeService {
     public List<MenuDTO> homeMenu() {
         return dao.menuLoad();
     }
+
+    public String getLoginURL() {
+        return dao.subURL();
+    }
 }
