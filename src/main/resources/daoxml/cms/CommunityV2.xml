@@ -50,19 +50,19 @@
     </sql>
 
     <!-- ResultMap -->
-    <resultMap id="secureDtoResultMap" type="com.tfriends.dto.cms.SecureDTO">
+    <resultMap id="secureDtoResultMap" type="SecureDTO">
         <id column="no" property="no" />
         <result column="type" property="type" />
         <result column="url" property="url" />
         <result column="name" property="name" />
         <result column="current" property="current" />
-        <collection property="permission" ofType="com.tfriends.dto.system.PermissionDTOv2">
+        <collection property="permission" ofType="PermissionDTOv2">
             <result column="write" property="write" />
             <result column="read" property="read" />
         </collection>
     </resultMap>
 
-    <resultMap id="articleReadMap" type="com.tfriends.dto.cms.DefaultDTOv2">
+    <resultMap id="articleReadMap" type="DefaultDTOv2">
         <id column="no" property="no" />
         <result column="title" property="title" />
         <result column="name" property="name" />
