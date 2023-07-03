@@ -8,6 +8,6 @@ import lombok.ToString;
 public class SubMenu {
     private int listorder;
     private String name;
-    private Type type;
+    private String type;
     private String url;
 }

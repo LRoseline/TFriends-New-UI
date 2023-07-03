@@ -13,7 +13,7 @@ import lombok.ToString;
 public class MenuDTOv2 {
     private int no;
     private String name;
-    private Type type;
+    private String type;
     private String url;
     private List<SubMenu> submenu;
 }

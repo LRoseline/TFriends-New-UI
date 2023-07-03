@@ -1,0 +1,72 @@
+<html lang="ko" xmlns:th="https://www.thymeleaf.org" xmlns="https://www.w3.org/1999/xhtml" layout:decorate="~{default/skin/basic}">
+    <head>
+        <title th:text="|T'Friends 	&VerticalSeparator; 글쓰기|"></title>
+        <link href="/css/search.css" rel="stylesheet" />
+        <link href="/css/boardlist.css" rel="stylesheet" />
+        <link href="/css/community.css" rel="stylesheet" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sceditor@3/minified/themes/default.min.css" />
+        <script src="https://cdn.jsdelivr.net/npm/sceditor@3/minified/sceditor.min.js"></script>
+        <style>
+            .editor {
+                margin: auto;
+                max-width: 800px;
+                width: 100%;
+            }
+        </style>
+    </head>
+    <th:block layout:fragment="navbar-custombtn">
+        <button class="top-menu" th:if="${isEdit == 1}" th:onclick="|href('/@{${uriparameter[1]}}/@{${uriparameter[2]}}/read/@{${uriparameter[4]}}@{${detail.uriQuerys(detail.page)}}')|">
+            <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        </button>
+        <button class="top-menu" th:unless="${isEdit == 1}" th:onclick="|href('/@{${uriparameter[1]}}/@{${uriparameter[2]}}@{${detail.uriQuerys(detail.page)}}')|">
+            <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        </button>
+        <button class="top-menu" onclick="submitForm()">
+            <i class="fa fa-check" aria-hidden="true"></i>
+        </button>
+    </th:block>
+    <th:block layout:fragment="main">
+        <form th:method="post" th:action="${isEdit == 1} ? |${uriparameter[4]}/go| : ${uriparameter[3]}" class="editor">
+            <input id="title" placeholder="제목" class="form-input-text" th:value="${isEdit == 1 ? edit.title : ''}" type="text" name="title">
+            <textarea th:text="${isEdit == 1 ? edit.content : ''}" name="content" id="content"></textarea>
+            <div th:if="${isEdit == 1}">
+                <input type="hidden" name="search_type" th:value="${detail.search_type}" />
+                <input type="hidden" name="word" th:value="${detail.word}" />
+                <input type="hidden" name="page" th:value="${detail.page}" />
+            </div>
+        </form>
+
+        <script src="https://cdn.jsdelivr.net/npm/sceditor@3/minified/formats/bbcode.min.js"></script>
+        <script>
+            var textarea = document.getElementById("content");
+            var title = document.querySelector("#title");
+
+            // Replace the textarea #example with SCEditor
+            sceditor.create(textarea, {
+                format: 'bbcode',
+                style: 'https://cdn.jsdelivr.net/npm/sceditor@3/minified/themes/content/default.min.css',
+                emoticonsRoot: '/imgs/',
+                resizeEnabled: false,
+                width: "auto",
+                height: "400px"
+            });
+
+            function submitForm() {
+                var formObj = document.querySelector(".editor");
+
+                var editor = sceditor.instance(textarea);
+                var content = editor.val();
+                
+
+                if (title.value.length === 0) {
+                    alert("제목을 입력해주세요.");
+                } else if (content.length === 0) {
+                    alert("내용을 입력해주세요.");
+                } else {
+                    textarea.innerHTML = content;
+                    formObj.submit();
+                }
+            }
+        </script>
+    </th:block>
+</html>

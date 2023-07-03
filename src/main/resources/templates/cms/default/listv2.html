@@ -42,7 +42,7 @@
                                             <span class="board-new" th:if="${list.newArticle == 1}">N</span>
                                         </div>
                                         <div class="board-list-detail">
-                                            <div class="regdate" th:if="${#dates.format(list.datatime.regdate, 'yyyy-MM-dd') == #dates.format(detail.current, 'yyyy-MM-dd')}" th:text="${#dates.format(list.datatime.regdate, 'HH:mm')}">00:00</div>
+                                            <div class="regdate" th:if="${#dates.format(list.datatime.regdate, 'yyyy-MM-dd') == #dates.format(detail.current, 'yyyy-MM-dd')}" style="text-align: center; width: 50px;" th:text="${#dates.format(list.datatime.regdate, 'HH:mm')}">00:00</div>
                                             <div class="regdate" th:unless="${#dates.format(list.datatime.regdate, 'yyyy-MM-dd') == #dates.format(detail.current, 'yyyy-MM-dd')}" th:text="${#dates.format(list.datatime.regdate, 'yyyy-MM-dd')}">1972-11-21</div>
                                             <div class="writer" th:text="${list.name}">User</div>
                                         </div>

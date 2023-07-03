@@ -43,8 +43,8 @@
                         <div class="content" th:utext="${detail.result.htmlContent}"></div>
                         <div class="bottom-statue">
                             <button id="read" class="btn btn-blue" data-oper="share">공유하기</button>
-                            <button id="read" class="btn btn-sky" sec:authorize="isAuthenticated()" th:if="${authen.uno == read.writer}" data-oper="edit">수정</button>
-                            <button id="read" class="btn btn-red" sec:authorize="isAuthenticated()" th:if="${authen.uno == read.writer} OR ${authen.roles} == 'ROLE_ADMIN'" data-oper="delete">삭제</button>
+                            <button id="read" class="btn btn-sky" sec:authorize="isAuthenticated()" th:if="${authen.uno == detail.result.writer}" data-oper="edit">수정</button>
+                            <button id="read" class="btn btn-red" sec:authorize="isAuthenticated()" th:if="${authen.uno == detail.result.writer} OR ${authen.roles} == 'ROLE_ADMIN'" data-oper="delete">삭제</button>
                         </div>
                     </div>
                 </div>

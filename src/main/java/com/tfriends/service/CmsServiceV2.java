@@ -3,12 +3,17 @@ package com.tfriends.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tfriends.dao.CmsDAOV2;
+import com.tfriends.dao.SystemDAO;
 import com.tfriends.dto.AccountDTO;
 import com.tfriends.dto.cms.DefaultDTOv2;
 import com.tfriends.dto.cms.SecureDTO;
 import com.tfriends.dto.pagination.PaginationDTOV2;
 import com.tfriends.dto.system.ErrorDTO;
+import com.tfriends.dto.system.TrashDTO;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 @Service
 public class CmsServiceV2 {
@@ -18,6 +23,12 @@ public class CmsServiceV2 {
 
     @Autowired
     private AccountService accounts;
+
+    @Autowired
+    private SystemDAO sysdao;
+
+    @Autowired
+    private HttpServletRequest req;
 
     SecureDTO secure;
     int code = 100;
@@ -121,9 +132,40 @@ public class CmsServiceV2 {
         return secure;
     }
 
-    public boolean deleteArticle(String category, int i) {
-        System.out.println("게시판 : " + category + ", 번호 : " + i);
+    public SecureDTO deleteArticle(String hash, int no) {
+        try {
+            AccountDTO user = accounts.getAuthen();
+            secure = dao.secureWindow(hash);
+            
+            if (secure != null) {
+                DefaultDTOv2 article = dao.boardArticle(secure.getBoard(), no);
+                deleteArticleThrow(user, secure.getBoard(), no, article);
+                code = 200;
+            } else {
+                secure = new SecureDTO();
+                code = 405;
+            }
+        } catch (Exception e) {
+            secure = new SecureDTO();
+            code = 401;
+        }
 
-        return dao.delArticle(category, i) == 1;
+        secure.setStatus(new ErrorDTO(code));
+        return secure;
+    }
+
+    private void deleteArticleThrow(AccountDTO a, String category, int rno, DefaultDTOv2 article) throws Exception {
+        ObjectMapper obj = new ObjectMapper();
+        String body = obj.writeValueAsString(article);
+
+        String ipRequest = req.getHeader("CF-Connecting-IP");
+        if (ipRequest == null) {
+            ipRequest = req.getRemoteAddr();
+        }
+
+        TrashDTO trash = new TrashDTO(a.getUno(), a.getMail(), ipRequest, body);
+
+        sysdao.newTrash(trash);
+        dao.delArticle(category, rno);
     }
 }
