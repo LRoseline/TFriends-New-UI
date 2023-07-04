@@ -1,17 +1,21 @@
 <html lang="ko" xmlns:th="https://www.thymeleaf.org" xmlns="https://www.w3.org/1999/xhtml" layout:decorate="~{default/skin/basic}">
     <head>
-        <title th:text="|T'Friends 	&VerticalSeparator; ${detail.result.title}|"></title>
+        <title th:if="${detail.status.cod == 200}" th:text="|T'Friends &VerticalSeparator; ${detail.result.title}|"></title>
+        <title th:if="${detail.status.cod != 200}" th:text="|T'Friends|"></title>
         <link href="/css/search.css" rel="stylesheet" />
         <link href="/css/boardlist.css" rel="stylesheet" />
         <link href="/css/community.css" rel="stylesheet" />
     </head>
     <th:block layout:fragment="navbar-custombtn">
-        <button class="top-menu" th:onclick="|href('/@{${uriparameter[1]}}/@{${uriparameter[2]}}@{${detail.page.uriQuerys(detail.page.page)}}')|">
+        <button th:if="${detail.status.cod == 200}" class="top-menu" th:onclick="|href('/@{${uriparameter[1]}}/@{${uriparameter[2]}}@{${detail.page.uriQuerys(detail.page.page)}}')|">
+            <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        </button>
+        <button th:if="${detail.status.cod != 200}" class="top-menu" th:onclick="|href('/@{${uriparameter[1]}}/@{${uriparameter[2]}}')|">
             <i class="fa fa-chevron-left" aria-hidden="true"></i>
         </button>
     </th:block>
     <th:block layout:fragment="main">
-        <div class="community-read">
+        <div class="community-read" th:if="${detail.status.cod == 200}">
             <div class="attribute" id="board-profile">
                 <div class="name-profile">
                     <div>
@@ -24,7 +28,7 @@
                 </div>
             </div>
             <div class="attribute" id="board-read">
-                <div th:if="${detail.result != null}">
+                <div>
                     <div class="title">
                         <div th:text="${detail.result.title}" style="width: calc(100% - 90px);"></div>
                         <div class="article-date">

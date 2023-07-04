@@ -37,7 +37,8 @@ public class V2Controller {
     }
 
     @GetMapping("/cmsv2/{hash}/write")
-    public ModelAndView defaultBoardWritev2(@PathVariable("hash") String hash, @ModelAttribute("detail") PaginationDTOV2 page) {
+    public ModelAndView defaultBoardWritev2(@PathVariable("hash") String hash,
+            @ModelAttribute("detail") PaginationDTOV2 page) {
         return new ModelAndView("/cms/default/writev2", "isEdit", 0);
     }
 
@@ -48,13 +49,15 @@ public class V2Controller {
     }
 
     @PostMapping("/cmsv2/{hash}/edit/{arcno}")
-    public ModelAndView defaultBoardEditv2(Model mdl, @PathVariable("hash") String hash, PaginationDTOV2 page, @PathVariable("arcno") int no) {
-        mdl.addAttribute("edit", service.userBoardRead(hash, no, page));
+    public ModelAndView defaultBoardEditv2(Model mdl, @PathVariable("hash") String hash, PaginationDTOV2 page,
+            @PathVariable("arcno") int no) {
+        mdl.addAttribute("detail", service.userBoardRead(hash, no, page));
         return new ModelAndView("/cms/default/writev2", "isEdit", 1);
     }
 
     @PostMapping("/cmsv2/{hash}/edit/{arcno}/go")
-    public String defaultBoardEdit(@PathVariable("hash") String hash, @PathVariable("arcno") int no, DefaultDTOv2 body, SearchDTOV2 dto) {
+    public String defaultBoardEdit(@PathVariable("hash") String hash, @PathVariable("arcno") int no, DefaultDTOv2 body,
+            SearchDTOV2 dto) {
         service.editArticle(hash, body, no);
         return "redirect:/cmsv2/" + hash + "/read/" + no + dto.uriQuerys(dto.getPage());
     }

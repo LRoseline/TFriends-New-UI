@@ -16,12 +16,12 @@
     </th:block>
     <th:block layout:fragment="main">
         <div class="head">
-            <span th:text="${detail.name}"></span>
+            <span th:text="${detail.status.cod == 200 ? detail.name : 'Exception'}"></span>
         </div>
         <div class="community">
-            <div class="attribute" id="board-layout">
-                <form id="board-management" onsubmit="return false">
-                    <table class="board-table" th:unless="${#lists.isEmpty(detail.result)}">
+            <div class="attribute" id="board-layout" th:if="${detail.status.cod == 200}">
+                <form id="board-management" onsubmit="return false" th:unless="${#lists.isEmpty(detail.result)}">
+                    <table th:if="${detail.type == 'community'}" class="board-table">
                         <thead>
                             <th th:if="${authen != null && authen.roles == 'ROLE_ADMIN'}" class="checklist-delete">
                                 <input type="checkbox" class="checklist-delete-all" onclick="checkALL(this)" />
@@ -51,18 +51,30 @@
                             </tr>
                         </tbody>
                     </table>
-                    <table class="board-table" th:if="${#lists.isEmpty(detail.result)}">
-                        <td style="height: 200px; vertical-align: middle; text-align: center; font-size: 20px;">작성된 글이 없어요!</td>
-                    </table>
-                    <div th:unless="${#lists.isEmpty(detail.result)}" th:insert="~{cms/materialv2 :: pagination}"></div>
+                    <div th:insert="~{cms/materialv2 :: pagination}"></div>
                     <input type="hidden" name="search_type" th:value="${detail.page.search_type}" />
                     <input type="hidden" name="word" th:value="${detail.page.word}" />
                     <input sec:authorize="isAuthenticated()" type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                    <div sec:authorize="isAuthenticated()" style="margin-bottom: 10px; padding: 0 10px;">
+                        <button class="btn btn-blue" th:if="${detail.permission.write &lt;= authen.grade || authen.roles == 'ROLE_ADMIN'}" th:onclick="|href('@{${hash}}/write')|">새로 작성하기</button>
+                        <button class="btn btn-red" onclick="confirmDel('#board-management')" th:if="${authen != null && authen.roles == 'ROLE_ADMIN'}">선택항목 삭제</button>
+                    </div>
                 </form>
-                <div sec:authorize="isAuthenticated()" style="margin-bottom: 10px; padding: 0 10px;">
-                    <button class="btn btn-blue" th:if="${detail.permission.write &lt;= authen.grade || authen.roles == 'ROLE_ADMIN'}" th:onclick="|href('@{${hash}}/write')|">새로 작성하기</button>
-                    <button class="btn btn-red" onclick="confirmDel('#board-management')" th:if="${authen != null && authen.roles == 'ROLE_ADMIN'}">선택항목 삭제</button>
-                </div>
+                <table class="board-table" th:if="${#lists.isEmpty(detail.result)}">
+                    <td style="height: 200px; vertical-align: middle; text-align: center; font-size: 20px;">
+                        <div>작성된 글이 없어요!</div>
+                        <div sec:authorize="isAuthenticated()">
+                            <button class="btn btn-blue" th:if="${detail.permission.write &lt;= authen.grade || authen.roles == 'ROLE_ADMIN'}" th:onclick="|href('@{${hash}}/write')|">새로 작성하기</button>
+                        </div>
+                    </td>
+                </table>
+            </div>
+            <div class="attribute" id="board-layout" th:if="${detail.status.cod != 200}">
+                <table class="board-table" th:if="${#lists.isEmpty(detail.result)}">
+                    <td style="height: 200px; vertical-align: middle; text-align: center; font-size: 20px;">
+                        해당 게시판은 존재하지 않거나 접근할 수 없습니다.
+                    </td>
+                </table>
             </div>
             <div id="board-side">
                 <!-- <div>

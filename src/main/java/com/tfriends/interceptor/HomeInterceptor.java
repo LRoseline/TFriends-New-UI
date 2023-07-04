@@ -15,11 +15,12 @@ public class HomeInterceptor implements HandlerInterceptor {
     private SystemService service;
 
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
+            throws Exception {
         request.setAttribute("always", service.newMenu());
         request.setAttribute("login", service.getLoginURL());
         request.setAttribute("fulluriwithout", request.getRequestURI());
-        request.setAttribute("fulluri", request.getRequestURL()+this.getQuery(request));
+        request.setAttribute("fulluri", request.getRequestURL() + this.getQuery(request));
 
         AccountDTO dto;
 
@@ -38,7 +39,7 @@ public class HomeInterceptor implements HandlerInterceptor {
         String query = req.getQueryString();
 
         if (query != null) {
-            return "?"+query;
+            return "?" + query;
         }
 
         return "";

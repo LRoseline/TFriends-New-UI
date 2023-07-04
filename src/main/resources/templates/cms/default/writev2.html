@@ -15,7 +15,7 @@
         </style>
     </head>
     <th:block layout:fragment="navbar-custombtn">
-        <button class="top-menu" th:if="${isEdit == 1}" th:onclick="|href('/@{${uriparameter[1]}}/@{${uriparameter[2]}}/read/@{${uriparameter[4]}}@{${detail.uriQuerys(detail.page)}}')|">
+        <button class="top-menu" th:if="${isEdit == 1}" th:onclick="|href('/@{${uriparameter[1]}}/@{${uriparameter[2]}}/read/@{${uriparameter[4]}}@{${detail.page.uriQuerys(detail.page.page)}}')|">
             <i class="fa fa-chevron-left" aria-hidden="true"></i>
         </button>
         <button class="top-menu" th:unless="${isEdit == 1}" th:onclick="|href('/@{${uriparameter[1]}}/@{${uriparameter[2]}}@{${detail.uriQuerys(detail.page)}}')|">
@@ -27,12 +27,12 @@
     </th:block>
     <th:block layout:fragment="main">
         <form th:method="post" th:action="${isEdit == 1} ? |${uriparameter[4]}/go| : ${uriparameter[3]}" class="editor">
-            <input id="title" placeholder="제목" class="form-input-text" th:value="${isEdit == 1 ? edit.title : ''}" type="text" name="title">
-            <textarea th:text="${isEdit == 1 ? edit.content : ''}" name="content" id="content"></textarea>
+            <input id="title" placeholder="제목" class="form-input-text" th:value="${isEdit == 1 ? detail.result.title : ''}" type="text" name="title">
+            <textarea th:text="${isEdit == 1 ? detail.result.content : ''}" name="content" id="content"></textarea>
             <div th:if="${isEdit == 1}">
-                <input type="hidden" name="search_type" th:value="${detail.search_type}" />
-                <input type="hidden" name="word" th:value="${detail.word}" />
-                <input type="hidden" name="page" th:value="${detail.page}" />
+                <input type="hidden" name="search_type" th:value="${detail.page.search_type}" />
+                <input type="hidden" name="word" th:value="${detail.page.word}" />
+                <input type="hidden" name="page" th:value="${detail.page.page}" />
             </div>
         </form>
 
