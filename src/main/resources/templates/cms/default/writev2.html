@@ -18,7 +18,7 @@
         <button class="top-menu" th:if="${isEdit == 1}" th:onclick="|href('/@{${uriparameter[1]}}/@{${uriparameter[2]}}/read/@{${uriparameter[4]}}@{${detail.page.uriQuerys(detail.page.page)}}')|">
             <i class="fa fa-chevron-left" aria-hidden="true"></i>
         </button>
-        <button class="top-menu" th:unless="${isEdit == 1}" th:onclick="|href('/@{${uriparameter[1]}}/@{${uriparameter[2]}}@{${detail.uriQuerys(detail.page)}}')|">
+        <button class="top-menu" th:if="${isEdit == 0}" th:onclick="|href('/@{${uriparameter[1]}}/@{${uriparameter[2]}}@{${detail.uriQuerys(detail.page)}}')|">
             <i class="fa fa-chevron-left" aria-hidden="true"></i>
         </button>
         <button class="top-menu" onclick="submitForm()">
