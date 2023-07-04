@@ -24,6 +24,6 @@ public interface CmsDAOV2 {
 
     public void updateArticle(@Param("board") String board, @Param("dto") DefaultDTOv2 dto);
 
-    @Delete("DELETE FROM `community_${board}` WHERE `no` = #{no}")
+    @Delete("DELETE FROM `${board}` WHERE `no` = #{no}")
     public int delArticle(@Param("board") String board, @Param("no") int i);
 }

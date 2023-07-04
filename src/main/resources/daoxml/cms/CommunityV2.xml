@@ -40,13 +40,13 @@
         </if>
     </sql>
     <sql id="t">
-        `title`like CONCAT('%', #{dto.word}, '%')
+        `title` like CONCAT('%', #{dto.word}, '%')
     </sql>
     <sql id="c">
-        `content`like CONCAT('%', #{dto.word}, '%')
+        `content` like CONCAT('%', #{dto.word}, '%')
     </sql>
     <sql id="w">
-        b.`name`like CONCAT('%', #{dto.word}, '%')
+        b.`name` like CONCAT('%', #{dto.word}, '%')
     </sql>
 
     <!-- ResultMap -->

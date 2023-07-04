@@ -30,7 +30,7 @@ public class CmsServiceV2 {
     @Autowired
     private HttpServletRequest req;
 
-    SecureDTO secure;
+    private SecureDTO secure;
     int code = 100;
 
     public SecureDTO userBoardList(String hash, PaginationDTOV2 page) {
@@ -139,8 +139,14 @@ public class CmsServiceV2 {
             
             if (secure != null) {
                 DefaultDTOv2 article = dao.boardArticle(secure.getBoard(), no);
-                deleteArticleThrow(user, secure.getBoard(), no, article);
-                code = 200;
+                if (article.getWriter() == user.getUno() || user.getGrade() >= 9) {
+                    deleteArticleThrow(user, secure.getBoard(), no, article);
+                    code = 200;
+                    secure.setResult("삭제 완료.");
+                } else {
+                    secure.setResult("권한이 없습니다.");
+                    code = 403;
+                }
             } else {
                 secure = new SecureDTO();
                 code = 405;
@@ -154,7 +160,7 @@ public class CmsServiceV2 {
         return secure;
     }
 
-    private void deleteArticleThrow(AccountDTO a, String category, int rno, DefaultDTOv2 article) throws Exception {
+    private void deleteArticleThrow(AccountDTO user, String category, int rno, DefaultDTOv2 article) throws Exception {
         ObjectMapper obj = new ObjectMapper();
         String body = obj.writeValueAsString(article);
 
@@ -163,7 +169,7 @@ public class CmsServiceV2 {
             ipRequest = req.getRemoteAddr();
         }
 
-        TrashDTO trash = new TrashDTO(a.getUno(), a.getMail(), ipRequest, body);
+        TrashDTO trash = new TrashDTO(user.getUno(), user.getMail(), ipRequest, body);
 
         sysdao.newTrash(trash);
         dao.delArticle(category, rno);

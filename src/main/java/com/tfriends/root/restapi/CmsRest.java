@@ -74,4 +74,11 @@ public class CmsRest {
 
         return new ResponseEntity<SecureDTO>(secure, HttpStatusCode.valueOf(secure.getStatus().getCod()));
     }
+
+    @GetMapping("/v2/{hash}/delete/{arcno}")
+    public ResponseEntity<SecureDTO> defaultBoardDelete(@PathVariable("hash") String hash, @PathVariable("arcno") int no) {
+        SecureDTO secure = cms.deleteArticle(hash, no);
+
+        return new ResponseEntity<SecureDTO>(secure, HttpStatusCode.valueOf(secure.getStatus().getCod()));
+    }
 }
