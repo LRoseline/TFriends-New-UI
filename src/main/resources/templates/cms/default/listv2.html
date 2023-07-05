@@ -59,7 +59,7 @@
                             </div>
                         </td>
                     </table>
-                    <div th:insert="~{cms/materialv2 :: pagination}" th:if="${detail.page.page > 1}"></div>
+                    <div th:insert="~{cms/materialv2 :: pagination}" th:if="${detail.page.end > 1}"></div>
                     <div sec:authorize="isAuthenticated()" style="margin-bottom: 10px; padding: 0 10px;">
                         <input id="csrf" type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
                         <button class="btn btn-blue" th:if="${detail.permission.write &lt;= authen.grade || authen.roles == 'ROLE_ADMIN'}" th:onclick="|href('@{${hash}}/write')|">새로 작성하기</button>
