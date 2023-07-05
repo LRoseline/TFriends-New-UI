@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -67,7 +69,7 @@ public class CmsRest {
         return new ResponseEntity<SecureDTO>(secure, HttpStatusCode.valueOf(secure.getStatus().getCod()));
     }
 
-    @PostMapping("/v2/{hash}/edit/{arcno}")
+    @PatchMapping("/v2/{hash}/edit/{arcno}")
     public ResponseEntity<SecureDTO> defaultBoardEdit(@PathVariable("hash") String hash, @RequestBody DefaultDTOv2 dto,
             @PathVariable("arcno") int no) {
         SecureDTO secure = cms.editArticle(hash, dto, no);
@@ -75,10 +77,22 @@ public class CmsRest {
         return new ResponseEntity<SecureDTO>(secure, HttpStatusCode.valueOf(secure.getStatus().getCod()));
     }
 
-    @GetMapping("/v2/{hash}/delete/{arcno}")
-    public ResponseEntity<SecureDTO> defaultBoardDelete(@PathVariable("hash") String hash, @PathVariable("arcno") int no) {
+    @DeleteMapping("/v2/{hash}/delete/{arcno}")
+    public ResponseEntity<SecureDTO> defaultBoardDelete(@PathVariable("hash") String hash,
+            @PathVariable("arcno") int no) {
         SecureDTO secure = cms.deleteArticle(hash, no);
 
         return new ResponseEntity<SecureDTO>(secure, HttpStatusCode.valueOf(secure.getStatus().getCod()));
     }
+
+    // @GetMapping("/v2/{hash}/delete/list")
+    // public ResponseEntity<SecureDTO> defaultBoardDeleteList(@PathVariable("hash")
+    // String hash, List<Integer> checked) {
+    // for (int no : checked) {
+    // SecureDTO secure = cms.deleteArticle(hash, no);
+    // }
+
+    // return new ResponseEntity<SecureDTO>(secure,
+    // HttpStatusCode.valueOf(secure.getStatus().getCod()));
+    // }
 }

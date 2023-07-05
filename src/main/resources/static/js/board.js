@@ -19,18 +19,32 @@ function checkOnce(object) {
     }
 }
 
-function confirmDel(objid) {
-    const checkCount = objAll(".checklist-delete-radio:checked").length;
-    const form = obj(objid);
+async function confirmDel() {
+    const checkCount = objAll(".checklist-delete-radio:checked");
 
-    if(checkCount !== 0 && confirm("정말로 삭제하시겠습니까?")) {
-        form.method = "post";
-        form.action = path+"/delete";
-        form.submit();
-        return true;
+    if(checkCount.length !== 0 && confirm("정말로 삭제하시겠습니까?")) {
+        let ok = 0;
+        let deny = 0;
+
+        for (var i = 0; i < checkCount.length; i++) {
+            await $.ajax({
+                url: "/rss/v2/"+path.split("/")[2]+"/delete/"+checkCount[i].value,
+                method: "DELETE",
+                beforeSend: function(xhr) {
+                    xhr.setRequestHeader('X-XSRF-TOKEN', document.querySelector("#csrf").value);
+                },
+                success: function(data, textStatus, xhr) {
+                    ok++;
+                },
+                error: function(data, textStatus, e) {
+                    deny++;
+                }
+            });
+        }
+        alert("삭제 작업을 완료했습니다.\n("+ok+"개 성공, "+deny+"개 실패)");
+        location.reload();
     } else {
         alert("삭제할 게시글을 최소 1개 이상 선택해주세요.");
-        return false;
     }
 }
 

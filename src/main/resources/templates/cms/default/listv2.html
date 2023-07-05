@@ -20,7 +20,7 @@
         </div>
         <div class="community">
             <div class="attribute" id="board-layout" th:if="${detail.status.cod == 200}">
-                <form id="board-management" onsubmit="return false" th:unless="${#lists.isEmpty(detail.result)}">
+                <div th:unless="${#lists.isEmpty(detail.result)}">
                     <table th:if="${detail.type == 'community'}" class="board-table">
                         <thead>
                             <th th:if="${authen != null && authen.roles == 'ROLE_ADMIN'}" class="checklist-delete">
@@ -51,23 +51,21 @@
                             </tr>
                         </tbody>
                     </table>
-                    <div th:insert="~{cms/materialv2 :: pagination}"></div>
-                    <input type="hidden" name="search_type" th:value="${detail.page.search_type}" />
-                    <input type="hidden" name="word" th:value="${detail.page.word}" />
-                    <input sec:authorize="isAuthenticated()" type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                    <table th:if="${#lists.isEmpty(detail.result)}" class="board-table">
+                        <td style="height: 200px; vertical-align: middle; text-align: center; font-size: 20px;">
+                            <div>작성된 글이 없어요!</div>
+                            <div sec:authorize="isAuthenticated()">
+                                <button class="btn btn-blue" th:if="${detail.permission.write &lt;= authen.grade || authen.roles == 'ROLE_ADMIN'}" th:onclick="|href('@{${hash}}/write')|">새로 작성하기</button>
+                            </div>
+                        </td>
+                    </table>
+                    <div th:insert="~{cms/materialv2 :: pagination}" th:if="${detail.page.page > 1}"></div>
                     <div sec:authorize="isAuthenticated()" style="margin-bottom: 10px; padding: 0 10px;">
+                        <input id="csrf" type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
                         <button class="btn btn-blue" th:if="${detail.permission.write &lt;= authen.grade || authen.roles == 'ROLE_ADMIN'}" th:onclick="|href('@{${hash}}/write')|">새로 작성하기</button>
-                        <button class="btn btn-red" onclick="confirmDel('#board-management')" th:if="${authen != null && authen.roles == 'ROLE_ADMIN'}">선택항목 삭제</button>
+                        <button class="btn btn-red" onclick="confirmDel()" th:if="${authen != null && authen.roles == 'ROLE_ADMIN'}">선택항목 삭제</button>
                     </div>
-                </form>
-                <table class="board-table" th:if="${#lists.isEmpty(detail.result)}">
-                    <td style="height: 200px; vertical-align: middle; text-align: center; font-size: 20px;">
-                        <div>작성된 글이 없어요!</div>
-                        <div sec:authorize="isAuthenticated()">
-                            <button class="btn btn-blue" th:if="${detail.permission.write &lt;= authen.grade || authen.roles == 'ROLE_ADMIN'}" th:onclick="|href('@{${hash}}/write')|">새로 작성하기</button>
-                        </div>
-                    </td>
-                </table>
+                </div>
             </div>
             <div class="attribute" id="board-layout" th:if="${detail.status.cod != 200}">
                 <table class="board-table" th:if="${#lists.isEmpty(detail.result)}">
@@ -103,6 +101,7 @@
         </div>
     </th:block>
     <th:block layout:fragment="scripts">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
         <script src="/js/board.js"></script>
     </th:block>
 </html>
