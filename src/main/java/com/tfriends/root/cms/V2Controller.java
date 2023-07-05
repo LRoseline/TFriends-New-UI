@@ -20,7 +20,6 @@ import com.tfriends.dto.pagination.SearchDTOV2;
 import com.tfriends.service.CmsServiceV2;
 import org.springframework.web.bind.annotation.RequestParam;
 
-
 @Controller
 public class V2Controller {
 
@@ -69,7 +68,8 @@ public class V2Controller {
     }
 
     @PostMapping("/cmsv2/{hash}/delete")
-    public String defaultBoardListDelete(@PathVariable("hash") String hash, @RequestParam("checkdelete") List<Integer> checkdelete) {
+    public String defaultBoardListDelete(@PathVariable("hash") String hash,
+            @RequestParam("checkdelete") List<Integer> checkdelete) {
         AccountDTO truth = (AccountDTO) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         if (truth.getRoles().equals("ROLE_ADMIN")) {
@@ -78,7 +78,7 @@ public class V2Controller {
             }
         }
 
-        return "redirect:/cmsv2/"+hash;
+        return "redirect:/cmsv2/" + hash;
     }
-    
+
 }

@@ -136,7 +136,7 @@ public class CmsServiceV2 {
         try {
             AccountDTO user = accounts.getAuthen();
             secure = dao.secureWindow(hash);
-            
+
             if (secure != null) {
                 DefaultDTOv2 article = dao.boardArticle(secure.getBoard(), no);
                 if (article.getWriter() == user.getUno() || user.getGrade() >= 9) {

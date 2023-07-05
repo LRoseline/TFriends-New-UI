@@ -60,6 +60,9 @@
                 </form>
             </div>
         </div>
+        <div class="community-read" th:if="${detail.status.cod != 200}">
+            Not found
+        </div>
         <th:block layout:fragment="scripts">
             <script>
                 function articleShare() {

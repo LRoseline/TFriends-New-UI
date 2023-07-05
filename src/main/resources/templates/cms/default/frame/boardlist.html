@@ -1,0 +1,32 @@
+<html lang="ko" xmlns:th="https://www.thymeleaf.org" xmlns="https://www.w3.org/1999/xhtml">
+    <table class="board-table" th:fragment="community">
+        <thead>
+            <th th:if="${authen != null && authen.roles == 'ROLE_ADMIN'}" class="checklist-delete">
+                <input type="checkbox" class="checklist-delete-all" onclick="checkALL(this)" />
+            </th>
+            <th style="width: 50px; text-align: right; padding-right: 4px;">#</th>
+            <th class="board-head-title">Title / Writer</th>
+        </thead>
+        <tbody>
+            <tr th:each="list : ${detail.result}">
+                <td th:if="${authen != null && authen.roles == 'ROLE_ADMIN'}" class="checklist-delete">
+                    <input name="checkdelete" class="checklist-delete-radio" type="checkbox" onclick="checkOnce('.checklist-delete-all')" th:value="${list.no}" />
+                </td>
+                <td class="board-list-number" th:text="${list.no}">00000</td>
+                <td>
+                    <a th:href="|${hash}/read/${list.no}${detail.page.uriQuerys(detail.page.page)}|">
+                        <div>
+                            <span th:text="${list.title}"></span>
+                            <span class="board-new" th:if="${list.newArticle == 1}">N</span>
+                        </div>
+                        <div class="board-list-detail">
+                            <div class="regdate" th:if="${#dates.format(list.datatime.regdate, 'yyyy-MM-dd') == #dates.format(detail.current, 'yyyy-MM-dd')}" style="text-align: center; width: 50px;" th:text="${#dates.format(list.datatime.regdate, 'HH:mm')}">00:00</div>
+                            <div class="regdate" th:unless="${#dates.format(list.datatime.regdate, 'yyyy-MM-dd') == #dates.format(detail.current, 'yyyy-MM-dd')}" th:text="${#dates.format(list.datatime.regdate, 'yyyy-MM-dd')}">1972-11-21</div>
+                            <div class="writer" th:text="${list.name}">User</div>
+                        </div>
+                    </a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</html>
