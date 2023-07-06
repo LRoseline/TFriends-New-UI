@@ -22,7 +22,7 @@ public class CmsServiceV2 {
     private CmsDAOV2 dao;
 
     @Autowired
-    private AccountService accounts;
+    private SystemService system;
 
     @Autowired
     private SystemDAO sysdao;
@@ -33,6 +33,11 @@ public class CmsServiceV2 {
     private SecureDTO secure;
     private AccountDTO user;
     int code = 100;
+
+    public String redirectTo(String url) {
+        String redirect = dao.redirectNewHash("community", url);
+        return "redirect:/cmsv2/"+redirect;
+    }
 
     public SecureDTO userBoardList(String hash, PaginationDTOV2 page) {
         secure = dao.secureWindow(hash);
@@ -64,7 +69,7 @@ public class CmsServiceV2 {
 
         if (secure != null) {
             try {
-                user = accounts.getAuthen();
+                user = system.getAuthen();
             } catch (Exception e) {
                 user = new AccountDTO();
             }
@@ -89,7 +94,7 @@ public class CmsServiceV2 {
 
     public SecureDTO regArticle(String hash, DefaultDTOv2 dto) {
         try {
-            user = accounts.getAuthen();
+            user = system.getAuthen();
             secure = dao.secureWindow(hash);
 
             if (secure != null && dto.getWriter() == 0) {
@@ -117,7 +122,7 @@ public class CmsServiceV2 {
 
     public SecureDTO editArticle(String hash, DefaultDTOv2 dto, int no) {
         try {
-            user = accounts.getAuthen();
+            user = system.getAuthen();
             secure = dao.secureWindow(hash);
             if (secure != null && dto.getWriter() == 0 && dto.getNo() == 0) {
                 dto.setNo(no);
@@ -141,7 +146,7 @@ public class CmsServiceV2 {
 
     public SecureDTO deleteArticle(String hash, int no) {
         try {
-            user = accounts.getAuthen();
+            user = system.getAuthen();
             secure = dao.secureWindow(hash);
 
             if (secure != null) {

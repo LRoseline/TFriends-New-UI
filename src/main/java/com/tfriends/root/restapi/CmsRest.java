@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.tfriends.dto.cms.DefaultDTOv2;
 import com.tfriends.dto.cms.SecureDTO;
 import com.tfriends.service.CmsServiceV2;
-import com.tfriends.service.ShortService;
 
 @RestController
 @RequestMapping("/rss")
@@ -35,13 +34,5 @@ public class CmsRest {
         SecureDTO secure = cms.deleteArticle(hash, no);
 
         return new ResponseEntity<SecureDTO>(secure, HttpStatusCode.valueOf(secure.getStatus().getCod()));
-    }
-
-    @Autowired
-    private ShortService shorts;
-
-    @GetMapping("/v2/shorts")
-    public ResponseEntity<Object> shortBoardPreview() {
-		return new ResponseEntity<Object>(shorts.previewShorts(), HttpStatus.OK);
     }
 }

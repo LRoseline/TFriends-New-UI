@@ -16,15 +16,15 @@ import com.tfriends.interceptor.HomeInterceptor;
 @EnableWebMvc
 public class WebConfig implements WebMvcConfigurer {
 
-    // @Bean
-    // CookieSerializer cookie() {
-    //     DefaultCookieSerializer serial = new DefaultCookieSerializer();
-    //     serial.setDomainName("tsukimorifriends.xyz");
-    //     serial.setCookieName("JSESSIONID");
-    //     serial.setCookiePath("/");
+    @Bean
+    CookieSerializer cookie() {
+        DefaultCookieSerializer serial = new DefaultCookieSerializer();
+        serial.setDomainName("tsukimorifriends.xyz");
+        serial.setCookieName("JSESSIONID");
+        serial.setCookiePath("/");
 
-    //     return serial;
-    // }
+        return serial;
+    }
 
     @Bean
     protected HomeInterceptor homeInterceptor() {

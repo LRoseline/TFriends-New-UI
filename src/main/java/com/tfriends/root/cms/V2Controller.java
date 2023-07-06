@@ -66,4 +66,10 @@ public class V2Controller {
         service.editArticle(hash, body, no);
         return "redirect:/cmsv2/" + hash + "/read/" + no + dto.uriQuerys(dto.getPage());
     }
+
+    @PostMapping("/cmsv2/{hash}/delete/{arcno}")
+    public String defaultBoardDelete(@PathVariable("hash") String hash, @PathVariable("arcno") int no, SearchDTOV2 dto) {
+        service.deleteArticle(hash, no);
+        return "redirect:/cmsv2/"+hash+dto.uriQuerys(dto.getPage());
+    }
 }

@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 
 import com.tfriends.dto.cms.DefaultDTOv2;
 import com.tfriends.dto.cms.SecureDTO;
@@ -26,4 +27,7 @@ public interface CmsDAOV2 {
 
     @Delete("DELETE FROM `${board}` WHERE `no` = #{no}")
     public int delArticle(@Param("board") String board, @Param("no") int i);
+
+    @Select("SELECT `hash` FROM boards WHERE `type` = #{type} AND `url` = #{url}")
+    public String redirectNewHash(@Param("type")String type, @Param("url")String url);
 }
