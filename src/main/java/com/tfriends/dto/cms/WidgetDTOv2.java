@@ -13,6 +13,8 @@ import lombok.ToString;
 @ToString
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class WidgetDTOv2 {
-    private String boardname;
+    private String dbname;
+    private String name;
+    private String hash;
     private List<DefaultDTOv2> articles;
 }

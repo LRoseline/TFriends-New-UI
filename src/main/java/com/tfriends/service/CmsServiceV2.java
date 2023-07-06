@@ -31,6 +31,7 @@ public class CmsServiceV2 {
     private HttpServletRequest req;
 
     private SecureDTO secure;
+    private AccountDTO user;
     int code = 100;
 
     public SecureDTO userBoardList(String hash, PaginationDTOV2 page) {
@@ -62,8 +63,14 @@ public class CmsServiceV2 {
         secure = dao.secureWindow(hash);
 
         if (secure != null) {
+            try {
+                user = accounts.getAuthen();
+            } catch (Exception e) {
+                user = new AccountDTO();
+            }
+
             DefaultDTOv2 article = dao.boardArticle(secure.getBoard(), no);
-            if (secure.getPermission().getRead() == 0 && article != null) {
+            if (secure.getPermission().getRead() <= user.getGrade() && article != null) {
                 secure.setPage(page);
                 secure.setResult(article);
                 code = 200;
@@ -82,7 +89,7 @@ public class CmsServiceV2 {
 
     public SecureDTO regArticle(String hash, DefaultDTOv2 dto) {
         try {
-            AccountDTO user = accounts.getAuthen();
+            user = accounts.getAuthen();
             secure = dao.secureWindow(hash);
 
             if (secure != null && dto.getWriter() == 0) {
@@ -110,7 +117,7 @@ public class CmsServiceV2 {
 
     public SecureDTO editArticle(String hash, DefaultDTOv2 dto, int no) {
         try {
-            AccountDTO user = accounts.getAuthen();
+            user = accounts.getAuthen();
             secure = dao.secureWindow(hash);
             if (secure != null && dto.getWriter() == 0 && dto.getNo() == 0) {
                 dto.setNo(no);
@@ -134,7 +141,7 @@ public class CmsServiceV2 {
 
     public SecureDTO deleteArticle(String hash, int no) {
         try {
-            AccountDTO user = accounts.getAuthen();
+            user = accounts.getAuthen();
             secure = dao.secureWindow(hash);
 
             if (secure != null) {

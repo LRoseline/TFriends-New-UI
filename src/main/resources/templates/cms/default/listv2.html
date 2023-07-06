@@ -49,23 +49,23 @@
                 </table>
             </div>
             <div id="board-side">
-                <div>
+                <div th:each="board : ${echo}">
                     <table class="board-table">
                         <thead>
-                            <th class="board-head-title">ShortBoard</th>
+                            <th class="board-head-title" th:text="${board.name}">ShortBoard</th>
                         </thead>
                         <tbody>
-                            <tr>
+                            <tr th:each="list : ${board.articles}">
                                 <td>
-                                    <a style="display: block;" href="/cmsv2/hash/read/0">
-                                        <span>Title</span>
-                                        <span class="board-new">N</span>
+                                    <a style="display: block;" th:href="|/cmsv2/${board.hash}/read/${list.no}|">
+                                        <span th:text="${list.title}">Title</span>
+                                        <span class="board-new" th:if="${list.newArticle == 1}">N</span>
                                     </a>
                                 </td>
                             </tr>
                             <tr>
                                 <td>
-                                    <a style="display: block;" href="/cmsv2/hash">More</a>
+                                    <a style="display: block;" th:href="|/cmsv2/${board.hash}|">More ></a>
                                 </td>
                             </tr>
                         </tbody>
