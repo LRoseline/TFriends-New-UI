@@ -1,4 +1,4 @@
-package com.tfriends.dao;
+package com.tfriends.dao.cms;
 
 import java.util.List;
 

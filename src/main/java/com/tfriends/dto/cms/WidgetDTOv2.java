@@ -1,12 +1,18 @@
 package com.tfriends.dto.cms;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
+@Getter
+@Setter
+@ToString
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class WidgetDTOv2 {
-
-    @Autowired
-
-    public SecureDTO miniBoard(String hash) {
-        return new SecureDTO();
-    }
+    private String boardname;
+    private List<DefaultDTOv2> articles;
 }

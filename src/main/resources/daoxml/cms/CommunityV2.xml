@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.tfriends.dao.CmsDAOV2">
+<mapper namespace="com.tfriends.dao.cms.CmsDAOV2">
     <!-- Search Query -->
     <sql id="search">
         <if test='dto.search_type == "all".toString()'>

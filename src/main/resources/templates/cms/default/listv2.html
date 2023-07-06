@@ -49,28 +49,28 @@
                 </table>
             </div>
             <div id="board-side">
-                <!-- <div>
+                <div>
                     <table class="board-table">
                         <thead>
-                            <th class="board-head-title" th:text="${echo[0].subname != null ? echo[0].subname : echo[0].menuname}"></th>
+                            <th class="board-head-title">ShortBoard</th>
                         </thead>
                         <tbody>
-                            <tr th:each="list : ${echo[1]}">
+                            <tr>
                                 <td>
-                                    <a style="display: block;" th:href="|/community/${echo[0].menuurl}/read/${list.no}|">
-                                        <span th:text="${list.title}"></span>
-                                        <span class="board-new" th:if="${list.newArticle == 1}">N</span>
+                                    <a style="display: block;" href="/cmsv2/hash/read/0">
+                                        <span>Title</span>
+                                        <span class="board-new">N</span>
                                     </a>
                                 </td>
                             </tr>
                             <tr>
                                 <td>
-                                    <a style="display: block;" th:href="|/community/${echo[0].menuurl}|">More</a>
+                                    <a style="display: block;" href="/cmsv2/hash">More</a>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
-                </div> -->
+                </div>
             </div>
         </div>
     </th:block>

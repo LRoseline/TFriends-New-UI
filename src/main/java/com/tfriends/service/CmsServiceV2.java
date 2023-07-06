@@ -4,8 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.tfriends.dao.CmsDAOV2;
 import com.tfriends.dao.SystemDAO;
+import com.tfriends.dao.cms.CmsDAOV2;
 import com.tfriends.dto.AccountDTO;
 import com.tfriends.dto.cms.DefaultDTOv2;
 import com.tfriends.dto.cms.SecureDTO;
