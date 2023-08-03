@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tfriends.dao.cms.ShortBoard">
+    <resultMap id="shortBoardMap" type="WidgetDTOv2" autoMapping="true">
+        <result column="name" property="name" />
+        <result column="hash" property="hash" />
+        <collection property="articles" ofType="DefaultDTOv2">
+            <result column="no" property="no" />
+            <result column="title" property="title" />
+            <collection property="datatime" ofType="com.tfriends.dto.cms.Timestamp">
+                <result column="regdate" property="regdate" />
+                <result column="update" property="update" />
+            </collection>
+        </collection>
+    </resultMap>
+    <select id="articleResult" resultMap="shortBoardMap">
+        <foreach item="board" collection="boardlists" separator=" UNION ALL ">
+            (SELECT
+            #{board.name} AS `name`, #{board.hash} AS `hash`,
+            `no`, `title`, `regdate` FROM ${board.dbname} ORDER BY `no` DESC LIMIT 0,5)
+        </foreach>
+    </select>
+</mapper>

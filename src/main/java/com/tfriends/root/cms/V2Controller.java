@@ -1,9 +1,6 @@
 package com.tfriends.root.cms;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,13 +9,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.tfriends.dto.AccountDTO;
 import com.tfriends.dto.cms.DefaultDTOv2;
 import com.tfriends.dto.cms.SecureDTO;
 import com.tfriends.dto.pagination.PaginationDTOV2;
 import com.tfriends.dto.pagination.SearchDTOV2;
 import com.tfriends.service.CmsServiceV2;
-import org.springframework.web.bind.annotation.RequestParam;
+import com.tfriends.service.ShortService;
 
 @Controller
 public class V2Controller {
@@ -26,9 +22,13 @@ public class V2Controller {
     @Autowired
     private CmsServiceV2 service;
 
+    @Autowired
+    private ShortService shorts;
+
     @GetMapping("/cmsv2/{hash}")
-    public ModelAndView defaultBoard(PaginationDTOV2 page, @PathVariable("hash") String hash) {
+    public ModelAndView defaultBoard(PaginationDTOV2 page, @PathVariable("hash") String hash, Model mdl) {
         SecureDTO result = service.userBoardList(hash, page);
+        mdl.addAttribute("echo", shorts.previewShorts());
 
         return new ModelAndView("/cms/default/listv2", "detail", result);
     }
@@ -67,18 +67,9 @@ public class V2Controller {
         return "redirect:/cmsv2/" + hash + "/read/" + no + dto.uriQuerys(dto.getPage());
     }
 
-    @PostMapping("/cmsv2/{hash}/delete")
-    public String defaultBoardListDelete(@PathVariable("hash") String hash,
-            @RequestParam("checkdelete") List<Integer> checkdelete) {
-        AccountDTO truth = (AccountDTO) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
-        if (truth.getRoles().equals("ROLE_ADMIN")) {
-            for (int rno : checkdelete) {
-                service.deleteArticle(hash, rno);
-            }
-        }
-
-        return "redirect:/cmsv2/" + hash;
+    @PostMapping("/cmsv2/{hash}/delete/{arcno}")
+    public String defaultBoardDelete(@PathVariable("hash") String hash, @PathVariable("arcno") int no, SearchDTOV2 dto) {
+        service.deleteArticle(hash, no);
+        return "redirect:/cmsv2/"+hash+dto.uriQuerys(dto.getPage());
     }
-
 }
