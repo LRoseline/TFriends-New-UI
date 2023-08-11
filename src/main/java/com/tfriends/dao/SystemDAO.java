@@ -15,7 +15,7 @@ import com.tfriends.dto.system.menu.MenuDTOv2;
 public interface SystemDAO {
     public List<MenuDTOv2> menuLoad();
 
-    @Select("SELECT `content` FROM account_union.options WHERE `type` = 'loginURL2'")
+    @Select("SELECT `content` FROM account_union.options WHERE `type` = 'loginURL'")
     public String subURL();
 
     public AccountDTO loginInfo(@Param("uno") long uno);
