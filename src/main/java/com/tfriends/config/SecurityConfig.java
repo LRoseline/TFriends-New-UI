@@ -10,14 +10,21 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 public class SecurityConfig {
 
 	@Bean
 	WebSecurityCustomizer webSecurityCustomizer() {
-		return (web) -> web.ignoring().requestMatchers(
-				"/css/*.css", "/js/*.js", "/favicon.ico", "/robots.txt");
+		return (web) -> web
+			.ignoring()
+				.requestMatchers(new AntPathRequestMatcher("/css/*.css"))
+				.requestMatchers(new AntPathRequestMatcher("/js/*.js"))
+				.requestMatchers(new AntPathRequestMatcher("/fonts/**"))
+				.requestMatchers(new AntPathRequestMatcher("/cdn/**"))
+				.requestMatchers(new AntPathRequestMatcher("/favicon.ico"))
+				.requestMatchers(new AntPathRequestMatcher("/robots.txt"));
 	}
 
 	@Bean
@@ -29,8 +36,9 @@ public class SecurityConfig {
 						.maximumSessions(1)
 						.expiredUrl("/expired"))
 				.authorizeHttpRequests((authz) -> authz
-						.requestMatchers("/nsfw/**").hasRole("ADMIN")
-						.requestMatchers("/*/*/write", "/*/*/edit").authenticated()
+						.requestMatchers(new AntPathRequestMatcher("/nsfw/**")).hasRole("ADMIN")
+						.requestMatchers(new AntPathRequestMatcher("/*/*/write")).authenticated()
+						.requestMatchers(new AntPathRequestMatcher("/*/*/edit")).authenticated()
 						.anyRequest().permitAll())
 				.logout(l -> l
 						.logoutUrl("/logout")

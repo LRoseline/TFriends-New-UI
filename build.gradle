@@ -31,15 +31,15 @@ dependencies {
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
-	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.1'
+	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.2'
 
 	/* Security dependencies */
-	implementation 'org.springframework.boot:spring-boot-starter-security:3.0.6'
-	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6:3.1.1.RELEASE'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
 
 	/* Redis */
-	implementation 'org.springframework.boot:spring-boot-starter-data-redis:3.0.6'
-	implementation 'org.springframework.session:spring-session-data-redis:3.0.1'
+	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+	implementation 'org.springframework.session:spring-session-data-redis'
 	implementation 'org.springframework.session:spring-session-core'
 	
 	/* Test */
