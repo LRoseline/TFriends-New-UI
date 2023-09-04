@@ -8,11 +8,12 @@ import org.springframework.stereotype.Service;
 
 import com.tfriends.dao.SystemDAO;
 import com.tfriends.dto.AccountDTO;
+import com.tfriends.dto.index.HomeDTO;
 import com.tfriends.dto.system.menu.MenuDTOv2;
 
 @Service
 public class SystemService {
-    
+
     @Autowired
     private SystemDAO dao;
 
@@ -22,6 +23,10 @@ public class SystemService {
 
     public String getLoginURL() {
         return dao.subURL();
+    }
+
+    public HomeDTO optionDetail(String option) {
+        return dao.indexHtmlShow(option);
     }
 
     public AccountDTO getAuthen() {

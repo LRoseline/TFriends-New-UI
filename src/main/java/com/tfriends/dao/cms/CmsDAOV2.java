@@ -29,5 +29,5 @@ public interface CmsDAOV2 {
     public int delArticle(@Param("board") String board, @Param("no") int i);
 
     @Select("SELECT `hash` FROM boards WHERE `type` = #{type} AND `url` = #{url}")
-    public String redirectNewHash(@Param("type")String type, @Param("url")String url);
+    public String redirectNewHash(@Param("type") String type, @Param("url") String url);
 }

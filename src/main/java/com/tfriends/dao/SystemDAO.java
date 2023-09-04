@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 import com.tfriends.dto.AccountDTO;
+import com.tfriends.dto.index.HomeDTO;
 import com.tfriends.dto.system.TrashDTO;
 import com.tfriends.dto.system.menu.MenuDTOv2;
 
@@ -19,6 +20,8 @@ public interface SystemDAO {
     public String subURL();
 
     public AccountDTO loginInfo(@Param("uno") long uno);
+
+    public HomeDTO indexHtmlShow(String option);
 
     @Insert("INSERT INTO manager.trashcanboard (`body`, `workedbyid`, `workedbymail`, `workedbyip`) VALUES (#{body}, #{workedbyid}, #{workedbymail}, #{workedbyip})")
     public void newTrash(TrashDTO dto);

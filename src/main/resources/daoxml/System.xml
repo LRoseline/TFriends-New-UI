@@ -15,6 +15,18 @@
             <result column="suburl" property="url" />
         </collection>
     </resultMap>
+    <resultMap id="HomeIndex" type="HomeDTO" autoMapping="true">
+        <id column="no" property="no" />
+        <result column="name" property="name" />
+        <result column="description" property="description" />
+        <result column="value" property="value" />
+        <collection property="tag" ofType="Option">
+            <result column="option1" property="option1" />
+            <result column="option2" property="option2" />
+            <result column="option2" property="option3" />
+        </collection>
+    </resultMap>
+
     <select id="menuLoad" resultMap="MenuTree">
         SELECT
         a.`no`, a.`name`, a.`type`, a.`url`,
@@ -30,5 +42,8 @@
         from account_union.accounts
         AS `a` INNER JOIN account_union.roles AS b on a.`grade` = b.`no`
         where uno = #{uno}
+    </select>
+    <select id="indexHtmlShow" resultMap="HomeIndex">
+        SELECT * FROM settings WHERE name = #{option}
     </select>
 </mapper>

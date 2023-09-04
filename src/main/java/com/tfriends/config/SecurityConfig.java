@@ -18,7 +18,7 @@ public class SecurityConfig {
 	@Bean
 	WebSecurityCustomizer webSecurityCustomizer() {
 		return (web) -> web
-			.ignoring()
+				.ignoring()
 				.requestMatchers(new AntPathRequestMatcher("/css/*.css"))
 				.requestMatchers(new AntPathRequestMatcher("/js/*.js"))
 				.requestMatchers(new AntPathRequestMatcher("/fonts/**"))
