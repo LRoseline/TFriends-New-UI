@@ -15,61 +15,63 @@
         <div th:replace="~{cms/material :: search}"></div>
     </th:block>
     <th:block layout:fragment="main">
-        <div class="head">
-            <span th:text="${detail.status.cod == 200 ? detail.name : 'Exception'}"></span>
-        </div>
-        <div class="community">
-            <div class="attribute" id="board-layout" th:if="${detail.status.cod == 200}">
-                <div>
-                    <!-- 일반게시판 -->
-                    <table th:insert="~{cms/default/frame/boardlist :: community}"  th:if="${detail.type == 'community'}" th:unless="${#lists.isEmpty(detail.result)}"></table>
-                    <!-- 작성된 글 없을 때 -->
-                    <table th:if="${#lists.isEmpty(detail.result)}" class="board-table">
-                        <td style="height: 200px; vertical-align: middle; text-align: center; font-size: 20px;">
-                            작성된 글이 없어요!
-                        </td>
-                    </table>
+        <div class="community-body">
+            <div class="head">
+                <span th:text="${detail.status.cod == 200 ? detail.name : 'Exception'}"></span>
+            </div>
+            <div class="community">
+                <div class="attribute" id="board-layout" th:if="${detail.status.cod == 200}">
+                    <div>
+                        <!-- 일반게시판 -->
+                        <table th:insert="~{cms/default/frame/boardlist :: community}"  th:if="${detail.type == 'community'}" th:unless="${#lists.isEmpty(detail.result)}"></table>
+                        <!-- 작성된 글 없을 때 -->
+                        <table th:if="${#lists.isEmpty(detail.result)}" class="board-table">
+                            <td style="height: 200px; vertical-align: middle; text-align: center; font-size: 20px;">
+                                작성된 글이 없어요!
+                            </td>
+                        </table>
 
-                    <!-- 페이지네이션 -->
-                    <div th:insert="~{cms/materialv2 :: pagination}" th:if="${detail.page.end > 1}"></div>
+                        <!-- 페이지네이션 -->
+                        <div th:insert="~{cms/materialv2 :: pagination}" th:if="${detail.page.end > 1}"></div>
 
-                    <!-- 속성 -->
-                    <div sec:authorize="isAuthenticated()" style="margin-bottom: 10px; padding: 0 10px;">
-                        <input id="csrf" type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-                        <button class="btn btn-blue" th:if="${detail.permission.write &lt;= authen.grade || authen.roles == 'ROLE_ADMIN'}" th:onclick="|href('@{${hash}}/write')|">새로 작성하기</button>
-                        <button class="btn btn-red" onclick="confirmDel()" th:if="${authen != null && authen.roles == 'ROLE_ADMIN'}">선택항목 삭제</button>
+                        <!-- 속성 -->
+                        <div sec:authorize="isAuthenticated()" style="margin-bottom: 10px; padding: 0 10px;">
+                            <input id="csrf" type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                            <button class="btn btn-blue" th:if="${detail.permission.write &lt;= authen.grade || authen.roles == 'ROLE_ADMIN'}" th:onclick="|href('@{${hash}}/write')|">새로 작성하기</button>
+                            <button class="btn btn-red" onclick="confirmDel()" th:if="${authen != null && authen.roles == 'ROLE_ADMIN'}">선택항목 삭제</button>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="attribute" id="board-layout" th:if="${detail.status.cod != 200}">
-                <table class="board-table" th:if="${#lists.isEmpty(detail.result)}">
-                    <td style="height: 200px; vertical-align: middle; text-align: center; font-size: 20px;">
-                        해당 게시판은 존재하지 않거나 접근할 수 없습니다.
-                    </td>
-                </table>
-            </div>
-            <div id="board-side">
-                <div th:each="board : ${echo}">
-                    <table class="board-table">
-                        <thead>
-                            <th class="board-head-title" th:text="${board.name}">ShortBoard</th>
-                        </thead>
-                        <tbody>
-                            <tr th:each="list : ${board.articles}">
-                                <td>
-                                    <a style="display: block;" th:href="|/cmsv2/${board.hash}/read/${list.no}|">
-                                        <span th:text="${list.title}">Title</span>
-                                        <span class="board-new" th:if="${list.newArticle == 1}">N</span>
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <a style="display: block;" th:href="|/cmsv2/${board.hash}|">More ></a>
-                                </td>
-                            </tr>
-                        </tbody>
+                <div class="attribute" id="board-layout" th:if="${detail.status.cod != 200}">
+                    <table class="board-table" th:if="${#lists.isEmpty(detail.result)}">
+                        <td style="height: 200px; vertical-align: middle; text-align: center; font-size: 20px;">
+                            해당 게시판은 존재하지 않거나 접근할 수 없습니다.
+                        </td>
                     </table>
+                </div>
+                <div id="board-side">
+                    <div th:each="board : ${echo}">
+                        <table class="board-table">
+                            <thead>
+                                <th class="board-head-title" th:text="${board.name}">ShortBoard</th>
+                            </thead>
+                            <tbody>
+                                <tr th:each="list : ${board.articles}">
+                                    <td>
+                                        <a style="display: block;" th:href="|/cmsv2/${board.hash}/read/${list.no}|">
+                                            <span th:text="${list.title}">Title</span>
+                                            <span class="board-new" th:if="${list.newArticle == 1}">N</span>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <a style="display: block;" th:href="|/cmsv2/${board.hash}|">More ></a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>

@@ -1,3 +1,13 @@
+.community-body {
+    max-width: 1024px;
+    position: relative;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, 0);
+    margin-bottom: 20px;
+}
+
 .head {
     border: 3px solid #aaa;
     border-radius: 10px;
@@ -72,7 +82,7 @@
     min-height: 100px;
 }
 
-.article > div > img {
+.form-img {
     margin: 4px 0 0 0;
     max-width: 100%;
 }

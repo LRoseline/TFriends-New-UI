@@ -55,9 +55,9 @@ public class BBCodeFilter {
         content = this.ulolFilter(content, "ol");
 
         // Image Settings
-        content = content.replaceAll("\\[img\\](.+?)\\[/img\\]", "<img src=\"$1\" />");
+        content = content.replaceAll("\\[img\\](.+?)\\[/img\\]", "<img src=\"$1\" class=\"form-img\" />");
         content = content.replaceAll("\\[img=(.+?)x(.+?)\\](.+?)\\[/img\\]",
-                "<img src=\"$3\" style=\"width: $1px;\" />");
+                "<img src=\"$3\" style=\"width: $1px;\" class=\"form-img\" />");
         content = content.replaceAll("<img (.+?)>\\s*<br>\\s*<br>", "<img $1><br>");
 
         // Block Settings
