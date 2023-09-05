@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import com.tfriends.dto.index.HomeDTO;
+import com.tfriends.dto.index.Option;
 import com.tfriends.service.ShortService;
 import com.tfriends.service.SystemService;
 
@@ -21,11 +22,12 @@ public class HomeController {
     @GetMapping("/")
     public String home(Model model) {
         HomeDTO dto = s.optionDetail("homescreen");
+        Option op = dto.getTag();
         model.addAttribute("welcome", dto);
 
         if (dto.getValue().equals("1")) {
-            model.addAttribute("board",
-                    cms.readInIndex(dto.getTag().getOption2(), Integer.valueOf(dto.getTag().getOption3())));
+            int no = Integer.parseInt(op.getOption3());
+            model.addAttribute("board", cms.readInIndex(op.getOption2(), no));
         }
 
         return "default/home";

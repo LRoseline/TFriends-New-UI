@@ -23,7 +23,7 @@
         <collection property="tag" ofType="Option">
             <result column="option1" property="option1" />
             <result column="option2" property="option2" />
-            <result column="option2" property="option3" />
+            <result column="option3" property="option3" />
         </collection>
     </resultMap>
 
