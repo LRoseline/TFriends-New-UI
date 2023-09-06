@@ -8,6 +8,11 @@ main {
     margin-top: 70px;
     padding: 5px 15px;
     margin-bottom: 50px;
+    max-width: 1024px;
+    position: relative;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, 0);
 }
 
 h1, h2, h3, h4, h5, h6 {
