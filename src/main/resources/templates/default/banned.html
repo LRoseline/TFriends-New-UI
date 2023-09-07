@@ -1,0 +1,12 @@
+<html lang="ko" xmlns:th="https://www.thymeleaf.org" xmlns="https://www.w3.org/1999/xhtml" layout:decorate="~{default/skin/basic}">
+    <head>
+        <title>T'Friends</title>
+        <link href="/css/community.css" rel="stylesheet" />
+    </head>
+    <th:block layout:fragment="main">
+        <h1>접속 차단 안내</h1>
+        <h4>현재 접속하신 위치(네트워크)는 부정행위 이력이 있습니다.</h4>
+        <div th:text="|접속 IP주소 : ${address}|"></div>
+        <div>문의 : whyibanned@tsukimorifriends.xyz</div>
+    </th:block>
+</html>

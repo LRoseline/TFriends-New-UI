@@ -10,6 +10,8 @@ import com.tfriends.dto.index.Option;
 import com.tfriends.service.ShortService;
 import com.tfriends.service.SystemService;
 
+import jakarta.servlet.http.HttpServletRequest;
+
 @Controller
 public class HomeController {
 
@@ -31,5 +33,17 @@ public class HomeController {
         }
 
         return "default/home";
+    }
+
+    @GetMapping("/banned")
+    public String bannedIP(Model mdl, HttpServletRequest req) throws Exception {
+        String ipRequest = req.getHeader("CF-Connecting-IP");
+        if (ipRequest == null) {
+            ipRequest = req.getRemoteAddr();
+        }
+
+        mdl.addAttribute("address", ipRequest);
+
+        return "default/banned";
     }
 }

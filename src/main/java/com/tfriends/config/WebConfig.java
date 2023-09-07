@@ -11,20 +11,21 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.tfriends.interceptor.CmsInterceptor;
 import com.tfriends.interceptor.HomeInterceptor;
+import com.tfriends.interceptor.SecurityInterceptor;
 
 @Configuration
 @EnableWebMvc
 public class WebConfig implements WebMvcConfigurer {
 
-    @Bean
-    CookieSerializer cookie() {
-        DefaultCookieSerializer serial = new DefaultCookieSerializer();
-        serial.setDomainName("tsukimorifriends.xyz");
-        serial.setCookieName("JSESSIONID");
-        serial.setCookiePath("/");
+    // @Bean
+    // CookieSerializer cookie() {
+    // DefaultCookieSerializer serial = new DefaultCookieSerializer();
+    // serial.setDomainName("tsukimorifriends.xyz");
+    // serial.setCookieName("JSESSIONID");
+    // serial.setCookiePath("/");
 
-        return serial;
-    }
+    // return serial;
+    // }
 
     @Bean
     protected HomeInterceptor homeInterceptor() {
@@ -36,8 +37,14 @@ public class WebConfig implements WebMvcConfigurer {
         return new CmsInterceptor();
     }
 
+    @Bean
+    protected SecurityInterceptor securityInterceptor() {
+        return new SecurityInterceptor();
+    }
+
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(securityInterceptor()).addPathPatterns("/**").excludePathPatterns("/banned");
         registry.addInterceptor(homeInterceptor()).addPathPatterns("/**");
         registry.addInterceptor(boardInterceptor()).addPathPatterns("/community/**", "/cmsv2/**");
     }

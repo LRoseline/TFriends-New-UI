@@ -10,4 +10,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         AS `a` INNER JOIN account_union.roles AS b on a.`grade` = b.`no`
         where uno = #{uno}
     </select>
+    <select id="checkIP" resultType="BwIpList">
+        SELECT `reason`, `type`, `start`, IF(`end`="0000-00-00","permanent",`end`) AS `until`
+        FROM account_union.ip_blackwhite WHERE `ip` = #{ip}
+    </select>
 </mapper>
