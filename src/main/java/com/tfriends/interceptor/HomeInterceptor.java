@@ -17,9 +17,8 @@ public class HomeInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
             throws Exception {
-        request.setAttribute("always", service.newMenu());
         request.setAttribute("login", service.getLoginURL());
-        request.setAttribute("fulluriwithout", request.getRequestURI());
+        request.setAttribute("always", service.newMenu());
         request.setAttribute("fulluri", request.getRequestURL() + this.getQuery(request));
 
         AccountDTO dto;
